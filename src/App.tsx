@@ -1,25 +1,17 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { GlobalStyle } from './style';
+import { IconStyle } from './assets/iconfont/iconfont';
+import { renderRoutes } from 'react-router-config';
+import routers from './routes/index';
+import {  HashRouter } from 'react-router-dom';
 
 const App: React.FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <HashRouter>
+      <IconStyle />
+      <GlobalStyle />
+      { renderRoutes(routers) }
+    </HashRouter>
   );
 }
 

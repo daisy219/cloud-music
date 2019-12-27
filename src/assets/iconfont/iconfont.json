@@ -1,0 +1,149 @@
+{
+  "id": "1584267",
+  "name": "cloud-music",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "8106214",
+      "name": "addto",
+      "font_class": "addto",
+      "unicode": "e698",
+      "unicode_decimal": 59032
+    },
+    {
+      "icon_id": "8106217",
+      "name": "delete",
+      "font_class": "delete",
+      "unicode": "e699",
+      "unicode_decimal": 59033
+    },
+    {
+      "icon_id": "8106221",
+      "name": "settings",
+      "font_class": "settings",
+      "unicode": "e69a",
+      "unicode_decimal": 59034
+    },
+    {
+      "icon_id": "8106223",
+      "name": "cancel",
+      "font_class": "cancel",
+      "unicode": "e69b",
+      "unicode_decimal": 59035
+    },
+    {
+      "icon_id": "8106226",
+      "name": "musiclist",
+      "font_class": "musiclist",
+      "unicode": "e69c",
+      "unicode_decimal": 59036
+    },
+    {
+      "icon_id": "8106228",
+      "name": "favoriteslist",
+      "font_class": "favoriteslist",
+      "unicode": "e69d",
+      "unicode_decimal": 59037
+    },
+    {
+      "icon_id": "8106230",
+      "name": "nextsong",
+      "font_class": "nextsong",
+      "unicode": "e69e",
+      "unicode_decimal": 59038
+    },
+    {
+      "icon_id": "8106237",
+      "name": "play",
+      "font_class": "play",
+      "unicode": "e69f",
+      "unicode_decimal": 59039
+    },
+    {
+      "icon_id": "8106245",
+      "name": "close",
+      "font_class": "close",
+      "unicode": "e6a0",
+      "unicode_decimal": 59040
+    },
+    {
+      "icon_id": "8106258",
+      "name": "collection",
+      "font_class": "collection",
+      "unicode": "e6a1",
+      "unicode_decimal": 59041
+    },
+    {
+      "icon_id": "8106259",
+      "name": "soundsize",
+      "font_class": "soundsize",
+      "unicode": "e6a2",
+      "unicode_decimal": 59042
+    },
+    {
+      "icon_id": "8106263",
+      "name": "history",
+      "font_class": "history",
+      "unicode": "e6a3",
+      "unicode_decimal": 59043
+    },
+    {
+      "icon_id": "8106267",
+      "name": "restore",
+      "font_class": "restore",
+      "unicode": "e6a4",
+      "unicode_decimal": 59044
+    },
+    {
+      "icon_id": "8106273",
+      "name": "timeout",
+      "font_class": "timeout",
+      "unicode": "e6a5",
+      "unicode_decimal": 59045
+    },
+    {
+      "icon_id": "8106288",
+      "name": "nickname",
+      "font_class": "nickname",
+      "unicode": "e6a6",
+      "unicode_decimal": 59046
+    },
+    {
+      "icon_id": "10678401",
+      "name": "back",
+      "font_class": "back",
+      "unicode": "e6db",
+      "unicode_decimal": 59099
+    },
+    {
+      "icon_id": "10678418",
+      "name": "info",
+      "font_class": "info",
+      "unicode": "e6de",
+      "unicode_decimal": 59102
+    },
+    {
+      "icon_id": "10678434",
+      "name": "search",
+      "font_class": "search",
+      "unicode": "e6e1",
+      "unicode_decimal": 59105
+    },
+    {
+      "icon_id": "10678437",
+      "name": "step back",
+      "font_class": "stepback",
+      "unicode": "e6e2",
+      "unicode_decimal": 59106
+    },
+    {
+      "icon_id": "10678457",
+      "name": "volume",
+      "font_class": "volume",
+      "unicode": "e6e3",
+      "unicode_decimal": 59107
+    }
+  ]
+}
