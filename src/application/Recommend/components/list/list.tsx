@@ -22,7 +22,7 @@ const RecommendList = (props: RecommendListStateType) => {
               <ListItem key={item.id}>
                 <div className="img_wrapper">
                   <div className="decorate"></div>
-                  <img src={item.picUrl + "?param=300*300"} width="100%" height="100%" alt="music"/>
+                  <img src={item.picUrl} width="100%" height="100%" alt="music"/>
                   <div className="play_count">
                     <i className="iconfont">&#xe6a5;</i>
                     <span className="count">{ getCount(item.playCount) }</span>
