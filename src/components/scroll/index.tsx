@@ -12,7 +12,7 @@ const ScrollContainer = styled.div`
 //   bannerList: any
 // }
 const Scroll = React.forwardRef ((props: any, ref: any) => {
-  const [bScroll, setBScroll] = useState();
+  const [bScroll, setBScroll] = useState(null);
   const scrollContaninerRef = useRef();
 
   const { direction, click, refresh, pullUpLoading, pullDownLoading, bounceTop, bounceBottom } = props;
@@ -21,7 +21,7 @@ const Scroll = React.forwardRef ((props: any, ref: any) => {
   useEffect(() => {
     // @ts-ignore
     const scroll = new BScroll(scrollContaninerRef.current, {
-      scrollX: direction === "horizental",
+      scrollX: direction === "horizontal",
       scrollY: direction === "vertical",
       probeType: 3,
       click: click,
@@ -32,57 +32,57 @@ const Scroll = React.forwardRef ((props: any, ref: any) => {
     });
     setBScroll(scroll);
     return () => {
-      setBScroll(undefined);
+      setBScroll(null);
     }
   }, []);
 
   useEffect(() => {
     if (!bScroll || !onScroll) return;
-    bScroll.on('scroll', (scroll: any) => {
+    (bScroll as any).on('scroll', (scroll: any) => {
       onScroll(scroll);
     })
     return () => {
-      bScroll.off('scroll');
+      (bScroll as any).off('scroll');
     }
   }, [onScroll, bScroll]);
 
   useEffect(() => {
     if (!bScroll || !pullUp) return;
-    bScroll.on('scrollEnd', () => {
+    (bScroll as any).on('scrollEnd', () => {
       // 判断是否滑动到了底部
-      if (bScroll.y <= bScroll.maxScrollY + 100) {
+      if ((bScroll as any).y <= (bScroll as any).maxScrollY + 100) {
         pullUp();
       }
     });
     return () => {
-      bScroll.off('scrollEnd');
+      (bScroll as any).off('scrollEnd');
     }
   }, [pullUp, bScroll]);
 
   useEffect(() => {
     if (!bScroll || !pullDown) return;
-    bScroll.on('touchEnd', (pos: any) => {
+    (bScroll as any).on('touchEnd', (pos: any) => {
       // 判断用户的下拉动作
       if (pos.y > 50) {
         pullDown();
       }
     });
     return () => {
-      bScroll.off('touchEnd');
+      (bScroll as any).off('touchEnd');
     }
   }, [pullDown, bScroll]);
 
   useEffect(() => {
     if (refresh && bScroll) {
-      bScroll.refresh();
+      (bScroll as any).refresh();
     }
   });
 
   useImperativeHandle(ref, () => ({
     refresh() {
       if (bScroll) {
-        bScroll.refresh();
-        bScroll.scrollTo(0, 0);
+        (bScroll as any).refresh();
+        (bScroll as any).scrollTo(0, 0);
       }
     },
     getBScroll() {
