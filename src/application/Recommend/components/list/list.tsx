@@ -5,6 +5,7 @@ import {
   List
 } from './style';
 import { getCount } from '@/utils/index';
+import LazyLoad from "react-lazyload";
 
 
 interface RecommendListStateType extends React.Props<any> {
@@ -22,7 +23,9 @@ const RecommendList = (props: RecommendListStateType) => {
               <ListItem key={item.id}>
                 <div className="img_wrapper">
                   <div className="decorate"></div>
-                  <img src={item.picUrl} width="100%" height="100%" alt="music"/>
+                  <LazyLoad placeholder={<img width="100%" height="100%" src={require('./default.jpg')} alt="music" />}>
+                    <img src={item.picUrl} width="100%" height="100%" alt="music"/>
+                  </LazyLoad>
                   <div className="play_count">
                     <i className="iconfont">&#xe6a5;</i>
                     <span className="count">{ getCount(item.playCount) }</span>

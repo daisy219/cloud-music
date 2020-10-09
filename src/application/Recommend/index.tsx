@@ -10,6 +10,7 @@ import * as actionTypes from './store/actionCreators';
 // } from '../../utils/index';
 import styled from 'styled-components';
 import Scroll from '@/components/scroll/index';
+import { forceCheck } from 'react-lazyload';
 
 export const Content = styled.div`
   position: fixed;
@@ -49,7 +50,7 @@ const Recommend = (props: RecomendListProps) => {
   // });
   return (
     <Content>
-      <Scroll className="list">
+      <Scroll className="list" onScroll={forceCheck}>
         <div>
           <Slider bannerList={bannerListJS}></Slider>
           <RecommendList recommendList={recommendListJS}></RecommendList>
