@@ -11,7 +11,7 @@ interface RecommendListStateType extends React.Props<any> {
   recommendList: any;
 }
 const RecommendList = (props: RecommendListStateType) => {
-  console.log(props);
+  // console.log(props);
   return (
     <ListWrapper>
       <h1 className="title">推荐歌单</h1>

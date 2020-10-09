@@ -9,7 +9,6 @@ interface SliderProps extends React.Props<any> {
 const Slider = (props: SliderProps) => {
   const [sliderSwiper, setSliderSwiper] = useState(null);
   const { bannerList } = props;
-  console.log(props);
 
   useEffect (() => {
     if (bannerList.length && !sliderSwiper) {

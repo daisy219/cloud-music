@@ -5,9 +5,9 @@ import { connect } from 'react-redux';
 import * as actionTypes from './store/actionCreators';
 
 
-import {
-  range_arr
-} from '../../utils/index';
+// import {
+//   range_arr
+// } from '../../utils/index';
 import styled from 'styled-components';
 import Scroll from '@/components/scroll/index';
 
@@ -31,7 +31,7 @@ const Recommend = (props: RecomendListProps) => {
   useEffect(() => {
     getBannerDataDispatch();
     getRecommendListDataDispatch();
-  }, []);
+  }, [getBannerDataDispatch, getRecommendListDataDispatch]);
 
   const bannerListJS = bannerList ? bannerList.toJS(): [];
   const recommendListJS = recommendList ? recommendList.toJS(): [];
@@ -63,8 +63,7 @@ const mapStateToProps = (state: any) => ({
   // 不要在这里将数据toJS
   // 不然每次diff对比props的时候都是不一样的引用，还会导致不必要的重渲染，属于滥用immutable
   bannerList: state.getIn(['recommend', 'bannerList']),
-  recommendList: state.getIn(['recomment', 'recommendList']),
-
+  recommendList: state.getIn(['recommend', 'recommendList']),
 });
 // 映射dispatch到props上
 const mapDispatchToProps = (dispatch: any) => {
@@ -73,7 +72,7 @@ const mapDispatchToProps = (dispatch: any) => {
       dispatch(actionTypes.getBannerList());
     },
     getRecommendListDataDispatch() {
-      dispatch(actionTypes.getRecommentList());
+      dispatch(actionTypes.getRecommendList());
     },
   }
 }

@@ -1,3 +1,4 @@
+// eslint-disable-next-line
 import React, { forwardRef, useState, useEffect, useRef, useImperativeHandle } from "react"
 import PropTypes from "prop-types"
 import BScroll from "better-scroll"
@@ -14,7 +15,7 @@ const ScrollContainer = styled.div`
 const Scroll = React.forwardRef ((props: any, ref: any) => {
   const [bScroll, setBScroll] = useState(null);
   const scrollContaninerRef = useRef();
-
+// eslint-disable-next-line
   const { direction, click, refresh, pullUpLoading, pullDownLoading, bounceTop, bounceBottom } = props;
   const { pullUp, pullDown, onScroll } = props;
 
@@ -34,7 +35,7 @@ const Scroll = React.forwardRef ((props: any, ref: any) => {
     return () => {
       setBScroll(null);
     }
-  }, []);
+  }, [bounceTop, click, bounceBottom, direction]);
 
   useEffect(() => {
     if (!bScroll || !onScroll) return;
