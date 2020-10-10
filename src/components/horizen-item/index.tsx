@@ -63,7 +63,7 @@ function Horizen(props: any) {
               return (
                 <ListItem
                   key={item.key}
-                  className={`${oldVal === item.key ? 'selected' : ''}`}
+                  className={oldVal === item.key ? 'selected' : ''}
                   onClick={() => handleClick(item.key)}
                 >{item.name}</ListItem>
               )
