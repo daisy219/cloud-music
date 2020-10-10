@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import Slider from './components/slider/slider';
 import RecommendList from './components/list/list';
+import Scroll from '@/components/scroll/index';
+import Loading from '@/components/loading/index';
 import { connect } from 'react-redux';
 import * as actionTypes from './store/actionCreators';
 
@@ -9,7 +11,6 @@ import * as actionTypes from './store/actionCreators';
 //   range_arr
 // } from '../../utils/index';
 import styled from 'styled-components';
-import Scroll from '@/components/scroll/index';
 import { forceCheck } from 'react-lazyload';
 
 export const Content = styled.div`
@@ -21,18 +22,23 @@ export const Content = styled.div`
 interface RecomendListProps extends React.Props<any> {
   bannerList: any,
   recommendList: any,
+  enterLoading: boolean,
   getBannerDataDispatch: () => void;
   getRecommendListDataDispatch: () => void;
 }
 
 const Recommend = (props: RecomendListProps) => {
-  const { bannerList, recommendList } = props;
+  const { bannerList, recommendList, enterLoading } = props;
   const { getBannerDataDispatch, getRecommendListDataDispatch } = props;
 
   useEffect(() => {
-    getBannerDataDispatch();
-    getRecommendListDataDispatch();
-  }, [getBannerDataDispatch, getRecommendListDataDispatch]);
+    if (!bannerList.size) {
+      getBannerDataDispatch();
+    }
+    if (!recommendList.size) {
+      getRecommendListDataDispatch();
+    }
+  }, [recommendList.size, bannerList.size, getBannerDataDispatch, getRecommendListDataDispatch]);
 
   const bannerListJS = bannerList ? bannerList.toJS(): [];
   const recommendListJS = recommendList ? recommendList.toJS(): [];
@@ -56,6 +62,7 @@ const Recommend = (props: RecomendListProps) => {
           <RecommendList recommendList={recommendListJS}></RecommendList>
         </div>
       </Scroll>
+      { enterLoading ? <Loading></Loading> : null }
     </Content>
   )
 }
@@ -65,6 +72,7 @@ const mapStateToProps = (state: any) => ({
   // 不然每次diff对比props的时候都是不一样的引用，还会导致不必要的重渲染，属于滥用immutable
   bannerList: state.getIn(['recommend', 'bannerList']),
   recommendList: state.getIn(['recommend', 'recommendList']),
+  enterLoading: state.getIn(['recommend', 'enterLoading'])
 });
 // 映射dispatch到props上
 const mapDispatchToProps = (dispatch: any) => {

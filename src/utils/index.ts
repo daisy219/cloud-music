@@ -31,3 +31,14 @@ export const getCount = (count: number) => {
     return Math.floor (count / 10000000)/ 10 + "亿";
   }
 }
+
+/**
+ * Promise封装等待时间
+ */
+export function waitTime(time: number) {
+  return new Promise((reslove) => {
+    setTimeout(() => {
+      reslove();
+    }, time);
+  })
+}
