@@ -32,13 +32,17 @@ const LoadingWarpper = styled.div`
   }
 `
 
-function Loading() {
+function Loading(prop: any) {
+  const { show } = prop;
   return (
-    <LoadingWarpper>
+    <LoadingWarpper style={show ? { display: '' } : { display: 'none'} }>
       <div></div>
       <div></div>
     </LoadingWarpper>
   )
+}
+Loading.defaultProps = {
+  show: true
 }
 
 export default React.memo(Loading);

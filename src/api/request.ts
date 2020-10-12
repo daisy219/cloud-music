@@ -11,11 +11,13 @@ export const getRecommendListRequest = () => {
 }
 
 // 歌手列表
-export const getHotSingerListRequest = () => {
+export const getHotSingerListRequest = (count: number): any => {
+  console.log(count);
   return axiosInstance.get(`/artists.json`);
 }
 
 // 模拟歌手筛选后列表
-export const getSingerListRequest = () => {
+export const getSingerListRequest = (category: string, alpha: string, count: number): any => {
+  console.log(category, alpha, count);
   return axiosInstance.get(`/artistsList.json`);
 }

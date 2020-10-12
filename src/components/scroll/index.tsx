@@ -3,21 +3,45 @@ import React, { forwardRef, useState, useEffect, useRef, useImperativeHandle } f
 import PropTypes from "prop-types"
 import BScroll from "better-scroll"
 import styled from 'styled-components';
+import Loading from '../loading/index';
+import Loading2 from '../loading-v2/index';
 
 const ScrollContainer = styled.div`
   width: 100%;
   height: 100%;
   overflow: hidden;
 `
+const PullUpLoading = styled.div`
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 5px;
+  width: 60px;
+  height: 60px;
+  margin: auto;
+  z-index: 100;
+`;
+
+export const PullDownLoading = styled.div`
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0px;
+  height: 30px;
+  margin: auto;
+  z-index: 100;
+`
 // interface SliderProps extends React.Props<any> {
 //   bannerList: any
 // }
 const Scroll = React.forwardRef ((props: any, ref: any) => {
-  const [bScroll, setBScroll] = useState(null);
+  const [bScroll, setBScroll] = useState();
   const scrollContaninerRef = useRef();
 // eslint-disable-next-line
   const { direction, click, refresh, pullUpLoading, pullDownLoading, bounceTop, bounceBottom } = props;
   const { pullUp, pullDown, onScroll } = props;
+  const pullUpDisplayStyle = pullUpLoading ? { display: '' } : { display: 'none' };
+  const pullDownDisplayStyle = pullDownLoading ? { display: '' } : { display: 'none' };
 
   useEffect(() => {
     // @ts-ignore
@@ -97,6 +121,9 @@ const Scroll = React.forwardRef ((props: any, ref: any) => {
     // @ts-ignore
     <ScrollContainer ref= { scrollContaninerRef } >
     { props.children }
+    {/* 滑倒底部动画 */}
+      <PullUpLoading style={pullUpDisplayStyle}><Loading></Loading></PullUpLoading>
+      <PullDownLoading style={pullDownDisplayStyle}><Loading2></Loading2></PullDownLoading>
     </ScrollContainer>
   );
 });
