@@ -32,7 +32,11 @@ const LoadingWarpper = styled.div`
   }
 `
 
-function Loading(prop: any) {
+interface PropType {
+  show: boolean;
+}
+
+function Loading(prop: PropType) {
   const { show } = prop;
   return (
     <LoadingWarpper style={show ? { display: '' } : { display: 'none'} }>

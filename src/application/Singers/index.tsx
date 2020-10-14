@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Horizen from '@/components/horizen-item/index';
 import Scroll from '@/components/scroll/index';
 import Loading from '@/components/loading/index';
+import LazyLoad, { forceCheck } from 'react-lazyload';
 
 import { categoryTypes, alphaTypes } from '@/api/config';
 import { NavContainer, ListContainer, List, ListItem } from './style';
@@ -92,7 +93,7 @@ const Singers: React.FC = (props: any) => {
   useEffect(() => {
     getHotSingerDispatch();
   }, [getHotSingerDispatch]);
-  
+
   // 渲染函数，返回歌手列表
   const renderSingerList = () => {
     const list = singerList ? singerList.toJS() : [];
@@ -103,7 +104,9 @@ const Singers: React.FC = (props: any) => {
             return (
               <ListItem key={item.accountId + "" + index}>
                 <div className="img_wrapper">
-                  <img src={`${item.picUrl}?param=300*300`} width="100%" height="100%" alt="music" />
+                  <LazyLoad placeholder={<img width="100%" height="100%" src={require('@/assets/images/default.jpg')} alt="music" />}>
+                    <img src={`${item.picUrl}?param=300*300`} width="100%" height="100%" alt="music" />
+                  </LazyLoad>
                 </div>
                 <span className="name">{item.name}</span>
               </ListItem>
@@ -132,6 +135,7 @@ const Singers: React.FC = (props: any) => {
       <ListContainer>
         <Loading show={enterLoading}></Loading>
         <Scroll
+          onScroll={forceCheck}
           pullUp={ handlePullUp }
           pullDown={ handlePullDown }
           pullUpLoading={ pullUpLoading }

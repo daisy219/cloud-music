@@ -23,7 +23,7 @@ const RecommendList = (props: RecommendListStateType) => {
               <ListItem key={item.id}>
                 <div className="img_wrapper">
                   <div className="decorate"></div>
-                  <LazyLoad placeholder={<img width="100%" height="100%" src={require('./default.jpg')} alt="music" />}>
+                  <LazyLoad placeholder={<img width="100%" height="100%" src={require('@/assets/images/default.jpg')} alt="music" />}>
                     <img src={item.picUrl} width="100%" height="100%" alt="music"/>
                   </LazyLoad>
                   <div className="play_count">

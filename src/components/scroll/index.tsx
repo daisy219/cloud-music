@@ -1,10 +1,11 @@
 // eslint-disable-next-line
-import React, { forwardRef, useState, useEffect, useRef, useImperativeHandle } from "react"
+import React, { forwardRef, useState, useEffect, useRef, useImperativeHandle, useMemo } from "react"
 import PropTypes from "prop-types"
 import BScroll from "better-scroll"
 import styled from 'styled-components';
 import Loading from '../loading/index';
 import Loading2 from '../loading-v2/index';
+import { debounce } from '@/api/utils';
 
 const ScrollContainer = styled.div`
   width: 100%;
@@ -31,6 +32,7 @@ export const PullDownLoading = styled.div`
   margin: auto;
   z-index: 100;
 `
+
 // interface SliderProps extends React.Props<any> {
 //   bannerList: any
 // }
@@ -43,6 +45,12 @@ const Scroll = React.forwardRef ((props: any, ref: any) => {
   const pullUpDisplayStyle = pullUpLoading ? { display: '' } : { display: 'none' };
   const pullDownDisplayStyle = pullDownLoading ? { display: '' } : { display: 'none' };
 
+  let pullUpDebounce = useMemo(() => {
+    return debounce(pullUp, 300)
+  }, [pullUp]);
+  let pullDownDebounce = useMemo(() => {
+    return debounce(pullDown, 300)
+  }, [pullDown])
   useEffect(() => {
     // @ts-ignore
     const scroll = new BScroll(scrollContaninerRef.current, {
@@ -73,29 +81,32 @@ const Scroll = React.forwardRef ((props: any, ref: any) => {
 
   useEffect(() => {
     if (!bScroll || !pullUp) return;
-    (bScroll as any).on('scrollEnd', () => {
+    const handlePullUp = () => {
       // 判断是否滑动到了底部
       if ((bScroll as any).y <= (bScroll as any).maxScrollY + 100) {
-        pullUp();
+        pullUpDebounce();
       }
-    });
-    return () => {
-      (bScroll as any).off('scrollEnd');
     }
-  }, [pullUp, bScroll]);
+    (bScroll as any).on('scrollEnd', handlePullUp);
+    // 解绑
+    return () => {
+      (bScroll as any).off('scrollEnd', handlePullUp);
+    }
+  }, [pullUp, bScroll, pullUpDebounce]);
 
   useEffect(() => {
     if (!bScroll || !pullDown) return;
-    (bScroll as any).on('touchEnd', (pos: any) => {
+    const handlePullDown = (pos: any) => {
       // 判断用户的下拉动作
       if (pos.y > 50) {
-        pullDown();
+        pullDownDebounce();
       }
-    });
-    return () => {
-      (bScroll as any).off('touchEnd');
     }
-  }, [pullDown, bScroll]);
+    (bScroll as any).on('touchEnd', handlePullDown);
+    return () => {
+      (bScroll as any).off('touchEnd', handlePullDown);
+    }
+  }, [pullDown, bScroll, pullDownDebounce]);
 
   useEffect(() => {
     if (refresh && bScroll) {
