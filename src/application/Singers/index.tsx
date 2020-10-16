@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useContext } from 'react';
 import Horizen from '@/components/horizen-item/index';
 import Scroll from '@/components/scroll/index';
 import Loading from '@/components/loading/index';
@@ -18,6 +18,8 @@ import {
   refreshMoreSingerList,
 
 } from './store/actionCreators';
+import { CategoryDataContext, CHANGE_ALPHA, CHANGE_CATEGORY } from './data';
+import { fromJS } from 'immutable';
 
 interface singerListType {
   picUrl: string;
@@ -71,14 +73,14 @@ const mapDispatchToProps = (dispatch: any) => {
 const Singers: React.FC = (props: any) => {
   const { singerList, enterLoading, pullUpLoading, pullDownLoading, pageCount } = props;
   const { getHotSingerDispatch, updateDispatch, pullUpRefreshDispatch, pullDownRefreshDispatch } = props;
-  let [category, setCategory] = useState('');
-  let [alpha, setAlpha] = useState('');
+  const { data, dispatch } = useContext(CategoryDataContext);
+  const { category, alpha } = data.toJS();
   let handleUpdateAlpha = (val: string) => {
-    setAlpha(val);
+    dispatch({ type: CHANGE_ALPHA, data: val});
     updateDispatch(category, val);
   }
   let handleUpdateCatetory = (val: string) => {
-    setCategory(val);
+    dispatch({ type: CHANGE_CATEGORY, data: val });
     updateDispatch(val, alpha);
   }
 
@@ -91,7 +93,9 @@ const Singers: React.FC = (props: any) => {
   }
 
   useEffect(() => {
-    getHotSingerDispatch();
+    if (!singerList.size) {
+      getHotSingerDispatch();
+    }
   }, [getHotSingerDispatch]);
 
   // 渲染函数，返回歌手列表
