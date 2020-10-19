@@ -37,6 +37,8 @@ const reducer = (state = defaultState, action: any) => {
       return state.set('rankList', action.data);
     case CHAGNE_LOADING: 
       return state.set('loading', action.data);
+    default:
+     return state;
   }
 }
 export { reducer }

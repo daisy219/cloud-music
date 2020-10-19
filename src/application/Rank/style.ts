@@ -2,7 +2,13 @@ import styled from 'styled-components';
 import style from '../../assets/global-style';
 
 // Props 中的 globalRank 和 tracks.length 均代表是否为全球榜
-
+interface ListPropType {
+  globalRank: boolean;
+}
+interface ListItemPropType {
+  tracks: any;
+  onClick: () => void
+}
 export const Container = styled.div`
   position: fixed;
   top: 90px;
@@ -19,7 +25,7 @@ export const Container = styled.div`
 export const List = styled.ul`
   margin-top: 10px;
   padding: 0 5px;
-  display: ${props => props.globalRank ? "flex" : ""};
+  display: ${(props: ListPropType) => props.globalRank ? "flex" : ""};
   flex-direction: row;
   justify-content: space-between;
   flex-wrap: wrap;
@@ -29,14 +35,14 @@ export const List = styled.ul`
     display:block;
     width: 32vw;
   }
-`
+` as React.FC<ListPropType>
 export const ListItem = styled.li`
-  display: ${props => props.tracks.length ? "flex" : ""};
+  display: ${(props: any) => props.tracks.length ? "flex" : ""};
   padding: 3px 0;
   border-bottom: 1px solid ${style["border-color"]};
   .img_wrapper {
-    width:  ${props => props.tracks.length ? "27vw" : "32vw"};
-    height: ${props => props.tracks.length ? "27vw" : "32vw"};
+    width:  ${(props: any) => props.tracks.length ? "27vw" : "32vw"};
+    height: ${(props: any) => props.tracks.length ? "27vw" : "32vw"};
     border-radius: 3px;
     position: relative;
     .decorate {
@@ -60,7 +66,7 @@ export const ListItem = styled.li`
       color: ${style["font-color-light"]};
     }
   }
-`;
+` as React.FC<ListItemPropType>;
 export const SongList = styled.ul`
   flex: 1;
   display: flex;
@@ -72,3 +78,10 @@ export const SongList = styled.ul`
     color: grey;
   }
 `;
+export const EnterLoading = styled.div`
+  position: fixed;
+  left: 0; right: 0; top: 0; bottom: 0;
+  width: 100px;
+  height: 100px;
+  margin: auto;
+`

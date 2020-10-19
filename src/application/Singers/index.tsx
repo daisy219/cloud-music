@@ -96,7 +96,7 @@ const Singers: React.FC = (props: any) => {
     if (!singerList.size) {
       getHotSingerDispatch();
     }
-  }, [getHotSingerDispatch]);
+  }, [getHotSingerDispatch, singerList.size]);
 
   // 渲染函数，返回歌手列表
   const renderSingerList = () => {
