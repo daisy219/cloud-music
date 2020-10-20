@@ -15,7 +15,7 @@ const App: React.FC = () => {
         <IconStyle />
         <GlobalStyle />
         <Data>
-          { renderRoutes(routers) }
+          { renderRoutes(routers as any) }
         </Data>
       </HashRouter>
     </Provider>

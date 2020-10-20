@@ -5,6 +5,7 @@ import Scroll from '@/components/scroll/index';
 import Loading from '@/components/loading/index';
 import { connect } from 'react-redux';
 import * as actionTypes from './store/actionCreators';
+import { renderRoutes } from 'react-router-config';
 
 
 // import {
@@ -20,6 +21,9 @@ export const Content = styled.div`
   width: 100%;
 `
 interface RecomendListProps extends React.Props<any> {
+  route: {
+    routes: any
+  },
   bannerList: any,
   recommendList: any,
   enterLoading: boolean,
@@ -27,7 +31,7 @@ interface RecomendListProps extends React.Props<any> {
   getRecommendListDataDispatch: () => void;
 }
 
-const Recommend = (props: RecomendListProps) => {
+const Recommend: React.FC<RecomendListProps> = (props: RecomendListProps) => {
   const { bannerList, recommendList, enterLoading } = props;
   const { getBannerDataDispatch, getRecommendListDataDispatch } = props;
 
@@ -63,6 +67,7 @@ const Recommend = (props: RecomendListProps) => {
         </div>
       </Scroll>
       { enterLoading ? <Loading></Loading> : null }
+      { renderRoutes(props.route.routes as any)}
     </Content>
   )
 }

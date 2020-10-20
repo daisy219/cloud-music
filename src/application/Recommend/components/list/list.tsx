@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import {
   ListWrapper,
   ListItem,
@@ -7,12 +8,16 @@ import {
 import { getCount } from '@/utils/index';
 import LazyLoad from "react-lazyload";
 
-
-interface RecommendListStateType extends React.Props<any> {
+interface RecommendListStateType{
   recommendList: any;
+  history: any;
 }
-const RecommendList = (props: RecommendListStateType) => {
+const RecommendList: React.FC<RecommendListStateType> = (props: RecommendListStateType) => {
   // console.log(props);
+  const enterDetail = (id: string) => {
+    console.log(id);
+    props.history.push(`/recommend/${id}`);
+  }
   return (
     <ListWrapper>
       <h1 className="title">推荐歌单</h1>
@@ -20,7 +25,7 @@ const RecommendList = (props: RecommendListStateType) => {
         {
           props.recommendList.map((item: any, index: number) => {
             return (
-              <ListItem key={item.id}>
+              <ListItem key={item.id} onClick={() => enterDetail(item.id)}>
                 <div className="img_wrapper">
                   <div className="decorate"></div>
                   <LazyLoad placeholder={<img width="100%" height="100%" src={require('@/assets/images/default.jpg')} alt="music" />}>
@@ -42,4 +47,4 @@ const RecommendList = (props: RecommendListStateType) => {
   )
 }
 
-export default React.memo(RecommendList);
+export default React.memo(withRouter(RecommendList as any)) as any;
