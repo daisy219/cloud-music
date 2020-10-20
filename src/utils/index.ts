@@ -42,3 +42,8 @@ export function waitTime(time: number) {
     }, time);
   })
 }
+
+/**
+ * 判断一个对象是否为空
+ */
+export const isEmptyObject = (obj: any) => !obj || Object.keys(obj).length === 0;

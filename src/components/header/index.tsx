@@ -23,14 +23,43 @@ const HeaderContainer = styled.div`
     font-weight: 700;
   }
 `
-
+const Marquee = styled.div`
+  width: 100%;
+  height: 35px;
+  overflow: hidden;
+  position: relative;
+  white-space: nowrap;
+ }
+ .text {
+  position: absolute;
+  animation: marquee 10s linear infinite;
+}
+@keyframes marquee{
+  from {
+    left: 100%;
+  }
+  to {
+    left: -100%
+  }
+}
+@keyframes marquee{
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+`
 // 处理函数组件拿不到ref的问题，所以用forwardRef
 const Header = React.forwardRef((props: any, ref: any) => {
-  const { handleClick, title } = props;
+  const { handleClick, title, isMarquee } = props;
   return (
     <HeaderContainer ref={ref}>
-      <i className="iconfont back" onClick={handleClick}>&#xe655;</i>
-      <h1>{title}</h1>
+      <i className="iconfont back" onClick={handleClick}>&#xe6db;</i>
+      {
+        isMarquee ? <Marquee><h1>{title}</h1></Marquee> : <h1>{title}</h1>
+      }
     </HeaderContainer>
   )
 });
@@ -38,11 +67,13 @@ const Header = React.forwardRef((props: any, ref: any) => {
 Header.defaultProps = {
   handerClick: () => {},
   title: "标题",
+  isMarquee: false
 };
 
 Header.propTypes = {
   handerClick: PropType.func,
   title: PropType.string,
+  isMarquee: PropType.bool,
 }
 
 export default React.memo(Header);

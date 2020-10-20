@@ -26,3 +26,8 @@ export const getSingerListRequest = (category: string, alpha: string, count: num
 export const getRankListRequest = (): any => {
   return axiosInstance.get('/topListDetail.json');
 }
+
+// 唱片详情
+export const getAlbumDetailRequest = (): any => {
+  return axiosInstance.get('/album.json');
+}

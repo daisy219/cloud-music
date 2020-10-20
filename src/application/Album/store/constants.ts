@@ -1,0 +1,2 @@
+export const CHANGE_ENTER_LOADING = 'album/CHANGE_ENTER_LOADING';
+export const CHANGE_ALBUM_DETAIL = 'album/CHANGE_ALBUM_DETAIL';
