@@ -39,7 +39,7 @@ const Rank: React.FC = (prop: any) => {
         {
           list.map((item: any) => {
             return (
-              <ListItem key={item.coverImgId} tracks={item.tracks} onClick={() => enterDetail(item.name)}>
+              <ListItem key={item.coverImgId} tracks={item.tracks} onClick={() => enterDetail(item.coverImgId)}>
                 <div className="img_wrapper">
                   <img src={item.coverImgUrl} alt=''/>
                   <div className="decorate"></div>
@@ -67,8 +67,8 @@ const Rank: React.FC = (prop: any) => {
   // 榜单数据未加载出来之前都给隐藏
   let displayStyle = loading ? {"display": "none"}: {"display": ""};
 
-  const enterDetail = (name: string) => {
-    console.log(name);
+  const enterDetail = (id: string) => {
+    prop.history.push(`/rank/${id}`);
   }
   useEffect(() => {
     getRankListDataDispatch();
