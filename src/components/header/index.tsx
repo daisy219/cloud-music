@@ -59,13 +59,13 @@ const Header = React.forwardRef((props: any, ref: any) => {
 });
 
 Header.defaultProps = {
-  handerClick: () => {},
+  handleClick: () => {},
   title: "标题",
   isMarquee: false
 };
 
 Header.propTypes = {
-  handerClick: PropType.func,
+  handleClick: PropType.func,
   title: PropType.string,
   isMarquee: PropType.bool,
 }

@@ -1,4 +1,4 @@
-import { fromJS } from 'immutable';
+// import { fromJS } from 'immutable';
 import React, { useEffect } from 'react';
 import Loading from '@/components/loading/index';
 import Scroll from '@/components/scroll/index';
@@ -84,7 +84,7 @@ const Rank: React.FC = (prop: any) => {
           {loading ? <EnterLoading><Loading></Loading></EnterLoading> : null}
         </div>
       </Scroll>
-      renderRoutes(props.route.routes)
+      {renderRoutes(prop.route.routes)}
     </Container>
   )
 }

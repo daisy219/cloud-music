@@ -19,7 +19,7 @@ import {
 
 } from './store/actionCreators';
 import { CategoryDataContext, CHANGE_ALPHA, CHANGE_CATEGORY } from './data';
-import { fromJS } from 'immutable';
+// import { fromJS } from 'immutable';
 
 interface singerListType {
   picUrl: string;
