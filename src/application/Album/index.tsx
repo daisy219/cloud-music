@@ -1,19 +1,19 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
-import { Container, TopDesc, Menu, SongItem, SongList } from './style';
+import { Container, TopDesc, Menu } from './style';
 import { CSSTransition } from 'react-transition-group';
 import Header from '@/components/header/index';
 import Scroll from '@/components/scroll/index';
 import * as actionTypes from './store/actionCreators';
 import { connect } from 'react-redux';
-import { isEmptyObject, getCount } from '@/utils/index';
-import { getName } from '@/api/utils';
+import { isEmptyObject } from '@/utils/index';
 import style from '@/assets/global-style';
 import Loading from '@/components/loading';
+import SongsList from '@/application/SongList/index';
 
 export const HEADER_HEIGHT = 45;
 
 
-const mapStateTopProps = (state: any) => ({
+const mapStateToProps = (state: any) => ({
   currentAlbum: state.getIn(['album', 'currentAlbum']),
   enterLoading: state.getIn(['album', 'enterLoading']),
 });
@@ -115,40 +115,7 @@ const Album: React.FC = (props: any) => {
     )
   }
 
-  // 歌单列表
-  const renderSongList = () => {
-    return (
-      <SongList>
-        <div className="first_line">
-          <div className="play_all">
-            <i className="iconfont">&#xe6e3;</i>
-            <span> 播放全部 <span className="sum">(共 {currentAlbumJS.tracks.length} 首)</span></span>
-          </div>
-          <div className="add_list">
-            <i className="iconfont">&#xe6a1;</i>
-            <span> 收藏 ({getCount(currentAlbumJS.subscribedCount)})</span>
-          </div>
-        </div>
-        <SongItem>
-          {
-            currentAlbumJS.tracks.map((item: any, index: number) => {
-              return (
-                <li key={index}>
-                  <span className="index">{index + 1}</span>
-                  <div className="info">
-                    <span>{item.name}</span>
-                    <span>
-                      {getName(item.ar)} - {item.al.name}
-                    </span>
-                  </div>
-                </li>
-              )
-            })
-          }
-        </SongItem>
-      </SongList>
-    )
-  }
+
   return (
     <CSSTransition
       in={showStatus}
@@ -167,10 +134,12 @@ const Album: React.FC = (props: any) => {
               <div>
                 { renderTopDesc() }
                 { renderMenu() }
-                { renderSongList() }
+                <SongsList 
+                  songs={currentAlbumJS.tracks}
+                  collectCount={currentAlbumJS.subscribedCount}
+                  showCollect={true}
+                ></SongsList>
               </div>
-
-              
             </Scroll>
           ) : null
       }
@@ -178,4 +147,4 @@ const Album: React.FC = (props: any) => {
     </CSSTransition>
   )
 }
-export default connect(mapStateTopProps, mapDispatchToProps)(React.memo(Album));
+export default connect(mapStateToProps, mapDispatchToProps)(React.memo(Album));

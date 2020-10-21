@@ -3,6 +3,7 @@ import Horizen from '@/components/horizen-item/index';
 import Scroll from '@/components/scroll/index';
 import Loading from '@/components/loading/index';
 import LazyLoad, { forceCheck } from 'react-lazyload';
+import { renderRoutes } from 'react-router-config';
 
 import { categoryTypes, alphaTypes } from '@/api/config';
 import { NavContainer, ListContainer, List, ListItem } from './style';
@@ -22,6 +23,7 @@ import { CategoryDataContext, CHANGE_ALPHA, CHANGE_CATEGORY } from './data';
 // import { fromJS } from 'immutable';
 
 interface singerListType {
+  id: string,
   picUrl: string;
   name: string;
   accountId: number;
@@ -92,6 +94,13 @@ const Singers: React.FC = (props: any) => {
     pullDownRefreshDispatch(category, alpha);
   }
 
+  /**
+   * 进入详情
+   */
+  const enterDetail = (id: string) => {
+    props.history.push(`singers/${id}`);
+  }
+
   useEffect(() => {
     if (!singerList.size) {
       getHotSingerDispatch();
@@ -106,7 +115,7 @@ const Singers: React.FC = (props: any) => {
         {
           list.map((item: singerListType, index: number) => {
             return (
-              <ListItem key={item.accountId + "" + index}>
+              <ListItem key={item.accountId + "" + index} onClick={() => enterDetail(item.id)}>
                 <div className="img_wrapper">
                   <LazyLoad placeholder={<img width="100%" height="100%" src={require('@/assets/images/default.jpg')} alt="music" />}>
                     <img src={`${item.picUrl}?param=300*300`} width="100%" height="100%" alt="music" />
@@ -148,6 +157,7 @@ const Singers: React.FC = (props: any) => {
           {renderSingerList()}
         </Scroll>
       </ListContainer>
+      {renderRoutes(props.route.routes)}
     </div>
   )
 }

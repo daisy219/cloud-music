@@ -84,6 +84,7 @@ const Rank: React.FC = (prop: any) => {
           {loading ? <EnterLoading><Loading></Loading></EnterLoading> : null}
         </div>
       </Scroll>
+      {/* 加上这一句才可以渲染子路由 */}
       {renderRoutes(prop.route.routes)}
     </Container>
   )

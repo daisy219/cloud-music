@@ -31,3 +31,8 @@ export const getRankListRequest = (): any => {
 export const getAlbumDetailRequest = (): any => {
   return axiosInstance.get('/album.json');
 }
+
+// 歌手歌单详情
+export const getSingerDetailRequest = (): any => {
+  return axiosInstance.get('/singerDetailSong.json');
+}
