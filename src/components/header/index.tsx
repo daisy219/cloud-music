@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import style from '@/assets/global-style';
 import PropType from 'prop-types';
 
@@ -23,34 +23,28 @@ const HeaderContainer = styled.div`
     font-weight: 700;
   }
 `
+const marquee = keyframes`
+  from {
+    /* left: 100%; */
+    transform: translateX(100%);
+  }
+  to {
+    /* left: -100%; */
+    transform: translateX(-100%);
+  }
+`
 const Marquee = styled.div`
   width: 100%;
   height: 35px;
   overflow: hidden;
   position: relative;
   white-space: nowrap;
- }
  .text {
-  position: absolute;
-  animation: marquee 10s linear infinite;
-}
-@keyframes marquee{
-  from {
-    left: 100%;
+    position: absolute;
+    animation: ${marquee} 10s linear infinite;
   }
-  to {
-    left: -100%
-  }
-}
-@keyframes marquee{
-  from {
-    transform: translateX(100%);
-  }
-  to {
-    transform: translateX(-100%);
-  }
-}
 `
+
 // 处理函数组件拿不到ref的问题，所以用forwardRef
 const Header = React.forwardRef((props: any, ref: any) => {
   const { handleClick, title, isMarquee } = props;
@@ -58,7 +52,7 @@ const Header = React.forwardRef((props: any, ref: any) => {
     <HeaderContainer ref={ref}>
       <i className="iconfont back" onClick={handleClick}>&#xe6db;</i>
       {
-        isMarquee ? <Marquee><h1>{title}</h1></Marquee> : <h1>{title}</h1>
+        isMarquee ? <Marquee><h1 className="text">{title}</h1></Marquee> : <h1>{title}</h1>
       }
     </HeaderContainer>
   )

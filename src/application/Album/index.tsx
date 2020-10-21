@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import { isEmptyObject, getCount } from '@/utils/index';
 import { getName } from '@/api/utils';
 import style from '@/assets/global-style';
+import Loading from '@/components/loading';
 
 export const HEADER_HEIGHT = 45;
 
@@ -19,6 +20,7 @@ const mapStateTopProps = (state: any) => ({
 const mapDispatchToProps = (dispatch: any) => {
   return {
     getAlbumDetailDispatch() {
+      dispatch(actionTypes.changeEnterLoading(true));
       dispatch(actionTypes.getAlbumDetail());
     },
   }
@@ -42,7 +44,7 @@ const Album: React.FC = (props: any) => {
     // 划过顶部的高度开始变化
     if (pos.y < minScrollY) {
       headerDom.style.backgroundColor = style["theme-color"];
-      headerDom.style.opacity = Math.min(1, (percent - 1) / 2);
+      headerDom.style.opacity = Math.min(1, (percent - 1) / 2); // 渐变效果
       setTitle(currentAlbumJS.name);
       setIsMarquee(true);
     } else {
@@ -71,6 +73,7 @@ const Album: React.FC = (props: any) => {
     >
 
     <Container>
+        {enterLoading ? <Loading></Loading> : null}
         <Header ref={headerEl} title={title} handleClick={handleBack} isMarquee={isMarquee}></Header>
       {
           !isEmptyObject(currentAlbumJS) ? (
@@ -124,7 +127,7 @@ const Album: React.FC = (props: any) => {
                       <span> 播放全部 <span className="sum">(共 {currentAlbumJS.tracks.length} 首)</span></span>
                     </div>
                     <div className="add_list">
-                      <i className="iconfont">&#xe62d;</i>
+                      <i className="iconfont">&#xe6a1;</i>
                       <span> 收藏 ({getCount(currentAlbumJS.subscribedCount)})</span>
                     </div>
                   </div>
