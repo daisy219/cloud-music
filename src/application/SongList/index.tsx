@@ -4,7 +4,7 @@ import { getCount } from '@/utils/index';
 import { getName } from '@/api/utils';
 
 // 歌单列表
-const SongsList = React.forwardRef((prop: any) => {
+const SongsList = React.forwardRef((prop: any, refs: any) => {
   const { collectCount, showCollect, songs } = prop;
   const totalCount = songs.length;
   const selectItem = (e: any, index: number) => {

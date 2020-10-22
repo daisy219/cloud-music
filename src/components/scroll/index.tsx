@@ -70,12 +70,13 @@ const Scroll = React.forwardRef ((props: any, ref: any) => {
   }, [bounceTop, click, bounceBottom, direction]);
 
   useEffect(() => {
-    if (!bScroll || !onScroll) return;
-    (bScroll as any).on('scroll', (scroll: any) => {
-      onScroll(scroll);
-    })
-    return () => {
-      (bScroll as any).off('scroll');
+    if (bScroll && onScroll) {
+      (bScroll as any).on('scroll', (scroll: any) => {
+        onScroll(scroll);
+      })
+      return () => {
+        (bScroll as any).off('scroll');
+      }
     }
   }, [onScroll, bScroll]);
 
