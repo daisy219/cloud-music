@@ -1,17 +1,29 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { getName } from '@/api/utils';
 import { MiniPlayerContainer } from './style';
+import { CSSTransition } from 'react-transition-group';
 
-function MiniPlayer(props: any) {
-  const { song } = props;
+const MiniPlayer = React.forwardRef((props: any, refs: any) => {
+  const { song, fullScreen } = props;
+  const { toggleFullScreen } = props;
 
-  const enterPlayer = () => {
-    props.history.push('player');
-  };
+  const miniPlayerRef = useRef() as any;
   return (
-    <MiniPlayerContainer>
+    <CSSTransition
+      in={!fullScreen}
+      timeout={400}
+      classNames="mini"
+      onEnter={() => {
+        miniPlayerRef.current.style.display = 'flex';
+      }}
+      onExited={() => {
+        miniPlayerRef.current.style.display = "none";
+      }}
+    >
+
+    <MiniPlayerContainer ref={miniPlayerRef} onClick={() => toggleFullScreen(true)}>
       <div className="icon">
-        <div className="imgWrapper" onClick={() => enterPlayer()}>
+        <div className="imgWrapper">
           <img className="play" src={(song.al || {}).picUrl} width="40" height="40" alt="img" />
         </div>
       </div>
@@ -26,7 +38,8 @@ function MiniPlayer(props: any) {
         <i className="iconfont">&#xe69c;</i>
       </div>
     </MiniPlayerContainer>
+    </CSSTransition>
   )
-}
+})
 
 export default React.memo(MiniPlayer);

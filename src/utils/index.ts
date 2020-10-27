@@ -47,3 +47,32 @@ export function waitTime(time: number) {
  * 判断一个对象是否为空
  */
 export const isEmptyObject = (obj: any) => !obj || Object.keys(obj).length === 0;
+
+// 给css3相关属性增加浏览器前缀，处理浏览器兼容性问题
+let elementStyle = document.createElement('div').style;
+let vendor = (() => {
+  // 首先通过transition属性判断是何种浏览器
+  let trandformNames = {
+    wekit: 'webkitTransform',
+    Moz: 'MozTransform',
+    O: 'OTransform',
+    ms: 'msTransform',
+    standard: 'Transform'
+  };
+  for (let key in trandformNames) {
+    if (elementStyle[trandformNames[key]] !== undefined) {
+      return key;
+    }
+  }
+  return false;
+})();
+
+export function prefixStyle(style: string) {
+  if (vendor === false) {
+    return false;
+  }
+  if (vendor === 'standard') {
+    return style;
+  }
+  return vendor + style.charAt(0).toUpperCase() + style.substr(1);
+}

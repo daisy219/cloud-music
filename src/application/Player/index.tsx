@@ -13,14 +13,26 @@ import MiniPlayer from './miniPlayer';
 import NormalPlayer from './normalPlayer';
 
 function Player(props: any) {
+  const { fullScreen } = props;
+  const { toggleFullScreenDispatch } = props;
   const currentSong = {
     al: { picUrl: "https://fuss10.elemecdn.com/a/3f/3302e58f9a181d2509f3dc0fa68b0jpeg.jpeg"},
     name: '木偶人',
     ar: [{name: '薛之谦'}]
   }
   return (
-    // <MiniPlayer song={currentSong}/>
-    <NormalPlayer song={currentSong} />
+    <div>
+      <MiniPlayer
+        song={currentSong}
+        fullScreen={fullScreen}
+        toggleFullScreen={toggleFullScreenDispatch}
+      />
+      <NormalPlayer
+        song={currentSong}
+        fullScreen={fullScreen}
+        toggleFullScreen={toggleFullScreenDispatch}
+      />
+    </div>
   )
 }
 
