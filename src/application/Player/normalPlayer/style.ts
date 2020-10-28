@@ -143,11 +143,11 @@ export const Bottom = styled.div`
   bottom: 50px;
   width: 100%;
 `
-export const ProgressWrapperr = styled.div`
+export const ProgressWrapper = styled.div`
   display: flex;
   align-items: center;
   width: 80%;
-  margin: 0px auto;
+  margin: 120vw auto 0;
   padding: 10px 0;
   .time {
     color: ${style['font-color-desc']};
@@ -162,7 +162,7 @@ export const ProgressWrapperr = styled.div`
       text-align: right;
     }
   }
-  .propgress-bar-wrapper {
+  .progress-bar-wrapper {
     flex: 1;
   }
 `

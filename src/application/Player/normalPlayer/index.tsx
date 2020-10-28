@@ -7,10 +7,12 @@ import {
   Bottom,
   Operators,
   CDWrapper,
+  ProgressWrapper
 } from './style';
 import { CSSTransition } from 'react-transition-group';
 import animations from 'create-keyframe-animation';
 import { prefixStyle } from '@/utils/index';
+import ProgressBar from '@/components/progressBar/index';
 
 
 const NormalPlayer = React.forwardRef((props: any, refs: any) => {
@@ -125,6 +127,13 @@ const NormalPlayer = React.forwardRef((props: any, refs: any) => {
             </div>
           </CDWrapper>
         </Middle>
+        <ProgressWrapper>
+          <span className="time time-l">0:00</span>
+          <div className="progress-bar-wrapper">
+            <ProgressBar percent={0.2}></ProgressBar>
+          </div>
+          <div className="time time-r">4:17</div>
+        </ProgressWrapper>
         <Bottom className="bottom">
           <Operators>
             <div className="icon i-left">

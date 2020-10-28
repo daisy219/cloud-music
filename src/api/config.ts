@@ -1,8 +1,9 @@
 import axios from 'axios';
 
 // export const baseUrl = 'http://localhost:3000';
-export const baseUrl = '/data';
+// export const baseUrl = '/data';
 
+export const baseUrl = process.env.NODE_ENV !== 'development' ? 'http://sicilymarmot.top/test/build/data/' : '/data';
 // axiso的实例及拦截器配置
 const axiosInstance = axios.create({
   baseURL: baseUrl
