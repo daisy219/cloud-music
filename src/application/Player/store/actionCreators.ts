@@ -9,6 +9,8 @@ import {
   SET_SHOW_PLAYLIST,
 } from './constants';
 import { fromJS } from 'immutable';
+import { getPlayListRequest } from '@/api/request';
+import { waitTime } from '@/utils/index';
 
 export const changeCurrentSong = (data: any) => ({
   type: SET_CURRENT_SONG,
@@ -49,3 +51,14 @@ export const changeShowPlayList = (data: any) => ({
   type: SET_SHOW_PLAYLIST,
   data
 });
+
+export const getPlayList = () => {
+  return (dispatch: any) => {
+    getPlayListRequest().then(async (data: any) => {
+      // await waitTime(1000);
+      console.log(data.data.result);
+      dispatch(changePlayList(data.data.result));
+    }).catch(() => {
+    })
+  }
+}

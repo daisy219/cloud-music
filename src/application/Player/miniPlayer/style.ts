@@ -36,16 +36,16 @@ export const MiniPlayerContainer = styled.div`
     width: 40px;
     height: 40px;
     padding: 0 10px 0 20px;
-    .imgWrarpper {
+    .imgWrapper {
       width: 100%;
       height: 100%;
       img {
         border-radius: 50%;
         &.play {
           animation: ${rotate} 10s infinite;
-          &.pause {
-            animation-play-state: paused;
-          }
+        }
+        &.pause {
+          animation-play-state: paused;
         }
       }
     }

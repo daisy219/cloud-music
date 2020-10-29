@@ -36,3 +36,8 @@ export const getAlbumDetailRequest = (): any => {
 export const getSingerDetailRequest = (): any => {
   return axiosInstance.get('/singerDetailSong.json');
 }
+
+// 播放列表
+export const getPlayListRequest = (): any => {
+  return axiosInstance.get('/playList.json');
+}
