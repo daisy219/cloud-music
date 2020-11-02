@@ -38,6 +38,7 @@ export const ProgressBarWrapper = styled.div`
   }
 `
 const ProgressBar = React.forwardRef((props: any, ref: any) => {
+  const { percent } = props;
   const { percentChange } = props; // 取出回调函数
   const progressBar = useRef() as any;
   const progress = useRef() as any;
@@ -47,7 +48,7 @@ const ProgressBar = React.forwardRef((props: any, ref: any) => {
   const _changePercent = () => {
     const barWidth = progressBar.current.clientWidth - progressBtnWidth;
     const curPercent = progress.current.clientWidth / barWidth; // 新的进度计算
-    // percentChange(curPercent); // 把新的进度传给回调函数并执行
+    percentChange(curPercent); // 把新的进度传给回调函数并执行
   }
   // 处理进度条的偏移
   const _offset = (offsetWidth: number) => {
@@ -81,6 +82,16 @@ const ProgressBar = React.forwardRef((props: any, ref: any) => {
     _offset(offsetWidth);
     _changePercent();
   }
+
+  // 监听percent
+  useEffect(() => {
+    if (percent >= 0 && percent <=1 && !touch.initiated) {
+      const barWidth = progressBar.current.clientWidth - progressBtnWidth;
+      const offsetWidth = percent * barWidth;
+      progress.current.style.width = `${offsetWidth}px`;
+      progressBtn.current.style.transform = `translate3d(${offsetWidth}px, 0, 0)`;
+    }
+  }, [percent]);
 
   return (
     <ProgressBarWrapper>

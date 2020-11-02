@@ -56,7 +56,7 @@ export const getPlayList = () => {
   return (dispatch: any) => {
     getPlayListRequest().then(async (data: any) => {
       // await waitTime(1000);
-      console.log(data.data.result);
+      // console.log(data.data.result);
       dispatch(changePlayList(data.data.result));
     }).catch(() => {
     })

@@ -11,13 +11,13 @@ import {
 } from './style';
 import { CSSTransition } from 'react-transition-group';
 import animations from 'create-keyframe-animation';
-import { prefixStyle } from '@/utils/index';
+import { prefixStyle, formatPlayTime } from '@/utils/index';
 import ProgressBar from '@/components/progressBar/index';
 
 
 const NormalPlayer = React.forwardRef((props: any, refs: any) => {
-  const { song, fullScreen } = props;
-  const { toggleFullScreen } = props;
+  const { song, fullScreen, playing, percent, duration, currentTime } = props;
+  const { toggleFullScreen, clickPlaying, onProgressChange } = props;
 
   const normalPlayerRef = useRef() as any;
   const cdWrapperRef = useRef() as any;
@@ -120,19 +120,33 @@ const NormalPlayer = React.forwardRef((props: any, refs: any) => {
           <CDWrapper>
             <div className="cd">
               <img
-                className="image play"
+                className={`image play ${playing ? '' : 'pause'}`}
                 src={song.al.picUrl + "?param=400*400"}
                 alt=""
               />
             </div>
+            <div className="icon i-center">
+              <i
+                className="iconfont"
+                onClick={e => clickPlaying(e, !playing)}
+                dangerouslySetInnerHTML={{
+                  __html: playing ? "&#xe723;" : "&#xe731;"
+                }}
+              >
+
+              </i>
+            </div>
           </CDWrapper>
         </Middle>
         <ProgressWrapper>
-          <span className="time time-l">0:00</span>
+          <span className="time time-l">{formatPlayTime(currentTime)}</span>
           <div className="progress-bar-wrapper">
-            <ProgressBar percent={0.2}></ProgressBar>
+            <ProgressBar
+              percent={percent}
+              percentChange={onProgressChange}
+            ></ProgressBar>
           </div>
-          <div className="time time-r">4:17</div>
+          <div className="time time-r">{formatPlayTime(duration)}</div>
         </ProgressWrapper>
         <Bottom className="bottom">
           <Operators>

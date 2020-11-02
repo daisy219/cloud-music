@@ -22,7 +22,7 @@ const ProgressCircle = (props: any) => {
   // 整个背景的周长
   const dashArray = Math.PI * 100;
   // 没有高亮的部分，剩下高亮的就是进度
-  const dashOffset = (1 - percent) * dashArray;
+  const dashOffset = isNaN((1 - percent) * dashArray) ? 0 : (1 - percent) * dashArray;
   return (
     <CircleWrapper>
       <svg width={radius} height={radius} viewBox='0 0 100 100' version='1.1' xmlns='http://www.w3.org/2000/svg'>
