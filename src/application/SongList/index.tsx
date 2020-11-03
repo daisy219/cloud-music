@@ -33,7 +33,7 @@ const SongsList = React.forwardRef((prop: any, refs: any) => {
   const collect = (count: number) => {
     return (
       <div className="add_list">
-        <i className="iconfont">&#xe6a1;</i>
+        <i className="iconfont">&#xe6b0;</i>
         <span> 收藏 ({getCount(count)})</span>
       </div>
     )
@@ -44,7 +44,7 @@ const SongsList = React.forwardRef((prop: any, refs: any) => {
     <SongList>
       <div className="first_line">
         <div className="play_all">
-          <i className="iconfont">&#xe6e3;</i>
+          <i className="iconfont">&#xe6b2;</i>
           <span> 播放全部 <span className="sum">(共 {totalCount} 首)</span></span>
         </div>
         {showCollect ? collect(collectCount) : null }

@@ -111,7 +111,7 @@ const NormalPlayer = React.forwardRef((props: any, refs: any) => {
         <div className="background layer"></div>
         <Top className="top">
           <div className="back" onClick={() => { toggleFullScreen(false) }}>
-            <i className="iconfont icon-back">&#xe6db;</i>
+            <i className="iconfont icon-back">&#xe69a;</i>
           </div>
           <h1 className="title">{song.name}</h1>
           <h1 className="subtitle">{getName(song.ar)}</h1>
@@ -130,7 +130,7 @@ const NormalPlayer = React.forwardRef((props: any, refs: any) => {
                 className="iconfont"
                 onClick={e => clickPlaying(e, !playing)}
                 dangerouslySetInnerHTML={{
-                  __html: playing ? "&#xe723;" : "&#xe731;"
+                  __html: playing ? "&#xe72f;" : "&#xe730;"
                 }}
               >
 
@@ -151,19 +151,19 @@ const NormalPlayer = React.forwardRef((props: any, refs: any) => {
         <Bottom className="bottom">
           <Operators>
             <div className="icon i-left">
-              <i className="iconfont">&#xe6a4;</i>
+              <i className="iconfont">&#xe6ab;</i>
             </div>
             <div className="icon i-left">
-              <i className="iconfont">&#xe69c;</i>
+              <i className="iconfont">&#xe6ad;</i>
             </div>
             <div className="icon i-center">
-              <i className="iconfont">&#xe69f;</i>
+              <i className="iconfont">&#xe6aa;</i>
             </div>
             <div className="icon i-right">
-              <i className="iconfont">&#xe69e;</i>
+              <i className="iconfont">&#xe6a9;</i>
             </div>
             <div className="icon i-right">
-              <i className="iconfont">&#xe69c;</i>
+              <i className="iconfont">&#xe6ac;</i>
             </div>
           </Operators>
         </Bottom>

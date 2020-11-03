@@ -75,7 +75,7 @@ const Album: React.FC = (props: any) => {
           <div className="decorate"></div>
           <img src={currentAlbumJS.coverImgUrl} alt="" />
           <div className="play_count">
-            <i className="iconfont play">&#xe69f;</i>
+            <i className="iconfont play">&#xe6aa;</i>
             <span className="count">{Math.floor(currentAlbumJS.subscribedCount / 1000 / 10)}万</span>
           </div>
         </div>
@@ -96,19 +96,19 @@ const Album: React.FC = (props: any) => {
     return (
       <Menu>
         <div>
-          <i className="iconfont">&#xe69c;</i>
+          <i className="iconfont">&#xe600;</i>
           评论
         </div>
         <div>
-          <i className="iconfont">&#xe69c;</i>
+          <i className="iconfont">&#xe629;</i>
           点赞
         </div>
         <div>
-          <i className="iconfont">&#xe69c;</i>
+          <i className="iconfont">&#xe6b1;</i>
           收藏
         </div>
         <div>
-          <i className="iconfont">&#xe69c;</i>
+          <i className="iconfont">&#xe7bc;</i>
           更多
         </div>
       </Menu>

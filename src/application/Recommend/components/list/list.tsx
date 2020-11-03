@@ -32,7 +32,7 @@ const RecommendList: React.FC<RecommendListStateType> = (props: RecommendListSta
                     <img src={item.picUrl} width="100%" height="100%" alt="music"/>
                   </LazyLoad>
                   <div className="play_count">
-                    <i className="iconfont">&#xe6a5;</i>
+                    <i className="iconfont">&#xe6ac;</i>
                     <span className="count">{ getCount(item.playCount) }</span>
                   </div>
                 </div>

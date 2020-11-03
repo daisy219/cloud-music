@@ -35,14 +35,14 @@ const MiniPlayer = React.forwardRef((props: any, refs: any) => {
           <ProgressCircle radius={32} percent={percent}>
             {
               playing ?
-                <i className="icon-mini iconfont icon-pause" onClick={(e) => clickPlaying(e, false)}>&#xe650;</i>
+                <i className="icon-mini iconfont icon-pause" onClick={(e) => clickPlaying(e, false)}>&#xe6aa;</i>
                 :
-                <i className="icon-mini iconfont icon-play" onClick={(e) => clickPlaying(e, true)}>&#xe6a5;</i>
+                <i className="icon-mini iconfont icon-play" onClick={(e) => clickPlaying(e, true)}>&#xe6af;</i>
             }
           </ProgressCircle>
         </div>
         <div className="control">
-          <i className="iconfont">&#xe69c;</i>
+          <i className="iconfont">&#xe6ac;</i>
         </div>
       </MiniPlayerContainer>
     </CSSTransition>

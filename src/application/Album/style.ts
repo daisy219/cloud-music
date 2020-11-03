@@ -93,6 +93,8 @@ export const TopDesc = styled.div`
       color: ${style["font-color-light"]};
       .play {
         vertical-align: top;
+        margin-right: 10px;
+        font-size: 14px;
       }
     }
     img {

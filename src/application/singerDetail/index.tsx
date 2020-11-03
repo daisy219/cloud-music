@@ -111,7 +111,7 @@ const SingerDetail = React.forwardRef((prop: any, refs: any) => {
                   <div className="filter"></div>
                 </ImgWrapper>
                 <CollectButton ref={collectButton}>
-                  <i className="iconfont">&#xe6a1;</i>
+                  <i className="iconfont">&#xe6b0;</i>
                   <span className="text">收藏</span>
                 </CollectButton>
                 <BgLayer ref={layer}></BgLayer>
