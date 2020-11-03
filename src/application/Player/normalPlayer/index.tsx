@@ -17,7 +17,7 @@ import ProgressBar from '@/components/progressBar/index';
 
 const NormalPlayer = React.forwardRef((props: any, refs: any) => {
   const { song, fullScreen, playing, percent, duration, currentTime } = props;
-  const { toggleFullScreen, clickPlaying, onProgressChange } = props;
+  const { toggleFullScreen, clickPlaying, onProgressChange, handlePrev, handleNext } = props;
 
   const normalPlayerRef = useRef() as any;
   const cdWrapperRef = useRef() as any;
@@ -125,17 +125,6 @@ const NormalPlayer = React.forwardRef((props: any, refs: any) => {
                 alt=""
               />
             </div>
-            <div className="icon i-center">
-              <i
-                className="iconfont"
-                onClick={e => clickPlaying(e, !playing)}
-                dangerouslySetInnerHTML={{
-                  __html: playing ? "&#xe72f;" : "&#xe730;"
-                }}
-              >
-
-              </i>
-            </div>
           </CDWrapper>
         </Middle>
         <ProgressWrapper>
@@ -153,13 +142,20 @@ const NormalPlayer = React.forwardRef((props: any, refs: any) => {
             <div className="icon i-left">
               <i className="iconfont">&#xe6ab;</i>
             </div>
-            <div className="icon i-left">
+            <div className="icon i-left" onClick={handlePrev}>
               <i className="iconfont">&#xe6ad;</i>
             </div>
             <div className="icon i-center">
-              <i className="iconfont">&#xe6aa;</i>
+              <i
+                className="iconfont"
+                onClick={e => clickPlaying(e, !playing)}
+                dangerouslySetInnerHTML={{
+                  __html: playing ? "&#xe6af;" : "&#xe6aa;"
+                }}
+              >
+              </i>
             </div>
-            <div className="icon i-right">
+            <div className="icon i-right" onClick={handleNext}>
               <i className="iconfont">&#xe6a9;</i>
             </div>
             <div className="icon i-right">
