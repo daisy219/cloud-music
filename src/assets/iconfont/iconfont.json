@@ -6,6 +6,41 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "17425267",
+      "name": "单曲循环",
+      "font_class": "danquxunhuan",
+      "unicode": "e635",
+      "unicode_decimal": 58933
+    },
+    {
+      "icon_id": "7031318",
+      "name": "暂停 停止",
+      "font_class": "zantingtingzhi",
+      "unicode": "e613",
+      "unicode_decimal": 58899
+    },
+    {
+      "icon_id": "10022050",
+      "name": "播放列表",
+      "font_class": "bofangliebiao1",
+      "unicode": "e601",
+      "unicode_decimal": 58881
+    },
+    {
+      "icon_id": "15262808",
+      "name": "1_music87",
+      "font_class": "1_music87",
+      "unicode": "e6b3",
+      "unicode_decimal": 59059
+    },
+    {
+      "icon_id": "15262831",
+      "name": "1_music85",
+      "font_class": "1_music85",
+      "unicode": "e6b4",
+      "unicode_decimal": 59060
+    },
+    {
       "icon_id": "15262823",
       "name": "1_music90",
       "font_class": "1_music90",

@@ -8,13 +8,13 @@ import {
   changePlayList,
   changePlayMode,
   changeFullScreen,
-  getPlayList
+  getPlayList,
+  getSequecePlayList
 } from './store/actionCreators';
 import MiniPlayer from './miniPlayer';
 import NormalPlayer from './normalPlayer';
-import { getSongUrl } from '@/api/utils';
+import { shuffle, findIndex } from '@/api/utils';
 import { isEmptyObject } from '@/utils/index';
-import { fromJS } from 'immutable';
 // const playList = [
 //   {
 //     ftype: 0,
@@ -103,6 +103,7 @@ const Player = React.forwardRef((props: any, ref: any) => {
   } = props;
   const {
     getPlayListDispatch,
+    getSequecePlayListDispatch,
     toggleFullScreenDispatch,
     togglePlayingDispatch,
     changeCurrentIndexDispatch,
@@ -119,7 +120,7 @@ const Player = React.forwardRef((props: any, ref: any) => {
 
   useEffect(() => {
     changeCurrentIndexDispatch(0);
-  },  []);
+  }, [changeCurrentIndexDispatch]);
 
   const updateTime = (e: any) => {
     setCurrentTime(e.target.currentTime);
@@ -129,14 +130,32 @@ const Player = React.forwardRef((props: any, ref: any) => {
   const currentSong = immutableCurrentSong.toJS();
   const playList = inmmutablePlayList.toJS();
   const sequencePlayList = immutableSequencePlayList.toJS();
-  // const currentSong = {
-  //   al: { picUrl: "https://fuss10.elemecdn.com/a/3f/3302e58f9a181d2509f3dc0fa68b0jpeg.jpeg"},
-  //   name: '木偶人',
-  //   ar: [{name: '薛之谦'}]
-  // }
+
+  const changeMode = () => {
+    let newMode = (mode + 1) % 3;
+    if (newMode === 0) {
+      // 顺序模式
+      changePlayListDispatch(sequencePlayList);
+      let index = findIndex(currentSong, sequencePlayList);
+      changeCurrentIndexDispatch(index);
+    } else if (newMode === 1) {
+      // 单曲循环
+      changePlayListDispatch(sequencePlayList)
+    } else if (newMode === 2) {
+      // 随机播放
+      let newList = shuffle(sequencePlayList);
+      let index = findIndex(currentSong, newList);
+      changePlayListDispatch(newList);
+      changeCurrentIndexDispatch(index);
+    }
+    changeModeDispatch(newMode);
+  };
+
+  // 获取播放列表
   useEffect(() => {
     getPlayListDispatch();
-  }, [])
+    getSequecePlayListDispatch();
+  }, [getPlayListDispatch, getSequecePlayListDispatch])
   useEffect(() => {
     if (
       !playList.length ||
@@ -149,6 +168,7 @@ const Player = React.forwardRef((props: any, ref: any) => {
     // changeCurrentIndexDispatch(0); // currentIndex默认为-1,临时改为0
     let current = playList[currentIndex] || {};
     changeCurrentDispatch(current); // 赋值currentSong
+    // console.log(current);
     setPreSong(current);
     // audioRef.current.src = getSongUrl(current.id);
     // setTimeout(() => {
@@ -157,7 +177,7 @@ const Player = React.forwardRef((props: any, ref: any) => {
     togglePlayingDispatch(true); // 播放状态
     setCurrentTime(0); // 从头开始播放
     setDuration((current.dt / 1000) | 0); // 时长
-  }, [playing, currentIndex]);
+  }, [playing, currentIndex, changeCurrentDispatch, playList, preSong.id, togglePlayingDispatch]);
 
   const clickPlaying = (e: any, state: boolean) => {
     e.stopPropagation();
@@ -234,6 +254,8 @@ const Player = React.forwardRef((props: any, ref: any) => {
           onProgressChange={onProgressChange}
           handlePrev={handlePrev}
           handleNext={handleNext}
+          mode={mode}
+          changeMode={changeMode}
         />
       }
       <audio
@@ -282,6 +304,9 @@ const mapDispatchToProps = (dispatch: any) => {
     },
     getPlayListDispatch() {
       dispatch(getPlayList())
+    },
+    getSequecePlayListDispatch() {
+      dispatch(getSequecePlayList())
     }
   };
 };

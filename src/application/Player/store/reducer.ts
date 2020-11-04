@@ -8,7 +8,7 @@ const defaultState = fromJS({
   sequencePlayList: [], // 顺序列表（因为之后会有随机模式，列表会乱序，从这里拿这个保存顺序列表）
   playList: [],
   mode: playMode.sequence, //  播放模式
-  currentIndex: -1, // 当前歌曲在播放列表的索引位置
+  currentIndex: 0, // 当前歌曲在播放列表的索引位置
   showPlayList: false, // 时候展示播放列表
   currentSong: {},
 });

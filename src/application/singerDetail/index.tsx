@@ -75,7 +75,7 @@ const SingerDetail = React.forwardRef((prop: any, refs: any) => {
         imageDOM.style.paddingTop = 0;
         imageDOM.style.zIndex = 99;
       }
-    }, [])
+  }, [collectButton, header, imageWrapper, initialHeight, layer])
   
     useEffect(() => {
       if (imageWrapper.current && songScrollWrapper.current && layer.current) {

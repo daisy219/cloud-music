@@ -11,17 +11,18 @@ import {
 } from './style';
 import { CSSTransition } from 'react-transition-group';
 import animations from 'create-keyframe-animation';
-import { prefixStyle, formatPlayTime } from '@/utils/index';
+import { formatPlayTime } from '@/utils/index';
 import ProgressBar from '@/components/progressBar/index';
+import { playMode } from '@/api/config';
 
 
 const NormalPlayer = React.forwardRef((props: any, refs: any) => {
-  const { song, fullScreen, playing, percent, duration, currentTime } = props;
-  const { toggleFullScreen, clickPlaying, onProgressChange, handlePrev, handleNext } = props;
+  const { song, fullScreen, playing, percent, duration, currentTime, mode } = props;
+  const { toggleFullScreen, clickPlaying, onProgressChange, handlePrev, handleNext, changeMode } = props;
 
   const normalPlayerRef = useRef() as any;
   const cdWrapperRef = useRef() as any;
-  const transform = prefixStyle('transform') as string;
+  // const transform = prefixStyle('transform') as string;
   const enter = () => {
     normalPlayerRef.current.style.display = 'block';
     const { x, y, scale } = _getPosAndScale(); // 获取miniPlayer图片中心相对normalPlayer唱片中心的偏移
@@ -88,6 +89,17 @@ const NormalPlayer = React.forwardRef((props: any, refs: any) => {
     // 不置为none现在全屏播放器页面还是存在
     normalPlayerRef.current.style.display = 'none';
   }
+  const getPlayMode = () => {
+    let content;
+    if (mode === playMode.sequence) {
+      content = '&#xe6ab;'
+    } else if (mode === playMode.loop) {
+      content = '&#xe635;'
+    } else {
+      content = '&#xe6b4;'
+    }
+    return content;
+  }
 
   return (
     <CSSTransition
@@ -139,8 +151,10 @@ const NormalPlayer = React.forwardRef((props: any, refs: any) => {
         </ProgressWrapper>
         <Bottom className="bottom">
           <Operators>
-            <div className="icon i-left">
-              <i className="iconfont">&#xe6ab;</i>
+            <div className="icon i-left" onClick={changeMode}>
+              <i className="iconfont"
+              dangerouslySetInnerHTML={{__html: getPlayMode()}}
+              ></i>
             </div>
             <div className="icon i-left" onClick={handlePrev}>
               <i className="iconfont">&#xe6ad;</i>

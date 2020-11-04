@@ -29,7 +29,7 @@ export const changePlayingState = (data: any) => ({
 
 export const changeSequecePlayList = (data: any) => ({
   type: SET_SEQUECE_PLAYLIST,
-  data
+  data: fromJS(data),
 });
 
 export const changePlayList = (data: any) => ({
@@ -55,9 +55,19 @@ export const changeShowPlayList = (data: any) => ({
 export const getPlayList = () => {
   return (dispatch: any) => {
     getPlayListRequest().then(async (data: any) => {
-      // await waitTime(1000);
+      await waitTime(1000);
       // console.log(data.data.result);
       dispatch(changePlayList(data.data.result));
+    }).catch(() => {
+    })
+  }
+}
+export const getSequecePlayList = () => {
+  return (dispatch: any) => {
+    getPlayListRequest().then(async (data: any) => {
+      // await waitTime(1000);
+      // console.log(data.data.result);
+      dispatch(changeSequecePlayList(data.data.result));
     }).catch(() => {
     })
   }

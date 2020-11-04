@@ -35,3 +35,29 @@ export const getName = (list: any[]) => {
 export const getSongUrl = (id: string | number) => {
   return `https://music.163.com/song/media/outer/url?id=${id}.mp3`;
 }
+
+function getRandomInt(min: number, max: number) {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+// 随机算法
+export function shuffle(arr: any[]) {
+  let new_arr: any[] = [];
+  arr.forEach((item: any) => {
+    new_arr.push(item);
+  });
+  for (let i = 0; i< new_arr.length; i++) {
+    let j = getRandomInt(0, i);
+    let t = new_arr[i];
+    new_arr[i] = new_arr[j];
+    new_arr[j] = t;
+  }
+  return new_arr;
+}
+
+// 找到当前的歌曲索引
+export const findIndex = (song: any, list: any[]) => {
+  return list.findIndex((item: any) => {
+    return song.id === item.id;
+  });
+};

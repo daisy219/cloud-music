@@ -1,8 +1,8 @@
-import { fromJS } from 'immutable';
+
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import style from '@/assets/global-style';
-import { prefixStyle } from '@/utils/index';
+// import { prefixStyle } from '@/utils/index';
 
 export const ProgressBarWrapper = styled.div`
   height: 30px;
@@ -91,7 +91,7 @@ const ProgressBar = React.forwardRef((props: any, ref: any) => {
       progress.current.style.width = `${offsetWidth}px`;
       progressBtn.current.style.transform = `translate3d(${offsetWidth}px, 0, 0)`;
     }
-  }, [percent]);
+  }, [progress, percent, progressBar, progressBtn, touch.initiated]);
 
   return (
     <ProgressBarWrapper>
