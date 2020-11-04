@@ -9,6 +9,7 @@ import { isEmptyObject } from '@/utils/index';
 import style from '@/assets/global-style';
 import Loading from '@/components/loading';
 import SongsList from '@/application/SongList/index';
+import MusicNote from '@/components/music-note/index';
 
 export const HEADER_HEIGHT = 45;
 
@@ -32,7 +33,10 @@ const Album: React.FC = (props: any) => {
   const [title, setTitle] = useState("歌单");
   const [isMarquee, setIsMarquee] = useState(false); // 是否跑马灯
   const headerEl = useRef();
-  
+  const musicNoteRef = useRef() as any;
+  const musicAnimation = (x: any, y: any) => {
+    musicNoteRef.current.startAnimation({ x, y });
+  }
   const { currentAlbum, enterLoading } = props;
   const { getAlbumDetailDispatch } = props;
   const currentAlbumJS = currentAlbum.toJS() || {};
@@ -138,7 +142,9 @@ const Album: React.FC = (props: any) => {
                   songs={currentAlbumJS.tracks}
                   collectCount={currentAlbumJS.subscribedCount}
                   showCollect={true}
+                  musicAnimation={musicAnimation}
                 ></SongsList>
+                <MusicNote ref={musicNoteRef}></MusicNote>
               </div>
             </Scroll>
           ) : null

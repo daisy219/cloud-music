@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useRef } from 'react';
 import Horizen from '@/components/horizen-item/index';
 import Scroll from '@/components/scroll/index';
 import Loading from '@/components/loading/index';
@@ -77,6 +77,7 @@ const Singers: React.FC = (props: any) => {
   const { getHotSingerDispatch, updateDispatch, pullUpRefreshDispatch, pullDownRefreshDispatch } = props;
   const { data, dispatch } = useContext(CategoryDataContext);
   const { category, alpha } = data.toJS();
+
   let handleUpdateAlpha = (val: string) => {
     dispatch({ type: CHANGE_ALPHA, data: val});
     updateDispatch(category, val);

@@ -2,13 +2,27 @@ import React from 'react';
 import { SongList, SongItem } from './style';
 import { getCount } from '@/utils/index';
 import { getName } from '@/api/utils';
+import { changePlayList, changeCurrentIndex, changeSequecePlayList } from '@/application/Player/store/actionCreators';
+import { connect } from 'react-redux';
 
 // 歌单列表
 const SongsList = React.forwardRef((prop: any, refs: any) => {
-  const { collectCount, showCollect, songs } = prop;
+  const { 
+    collectCount,
+    showCollect,
+    songs,
+    changePlayListDispatch,
+    changeCurrentIndexDispatch,
+    changeSequecePlayListDispatch
+   } = prop;
+  const { musicAnimation } = prop;
   const totalCount = songs.length;
   const selectItem = (e: any, index: number) => {
-    console.log(index);
+    changePlayListDispatch(songs);
+    changeSequecePlayListDispatch(songs);
+    changeCurrentIndexDispatch(index);
+    musicAnimation(e.nativeEvent.clientX, e.nativeEvent.clientY);
+    // console.log(index);
   }
 
   let songList = (list: any[]) => {
@@ -54,6 +68,20 @@ const SongsList = React.forwardRef((prop: any, refs: any) => {
       </SongItem>
     </SongList>
   )
-})
+});
+// 映射dispatch到prop上
+const mapDispatchToProps = (dispatch: any) => {
+  return {
+    changePlayListDispatch(data: any) {
+      dispatch(changePlayList(data));
+    },
+    changeCurrentIndexDispatch(data: any) {
+      dispatch(changeCurrentIndex(data));
+    },
+    changeSequecePlayListDispatch(data: any) {
+      dispatch(changeSequecePlayList(data));
+    }
+  }
+}
 
-export default React.memo(SongsList);
+export default connect(null, mapDispatchToProps)(React.memo(SongsList));
