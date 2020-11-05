@@ -17,6 +17,7 @@ import Toast from '@/components/toast/index';
 import { getSongUrl, shuffle, findIndex } from '@/api/utils';
 import { isEmptyObject } from '@/utils/index';
 import { playMode } from '@/api/config';
+import PlayList from '@/application/PlayList/index';
 
 const Player = React.forwardRef((props: any, ref: any) => {
   const audioRef = useRef() as any;
@@ -38,7 +39,8 @@ const Player = React.forwardRef((props: any, ref: any) => {
     changeCurrentIndexDispatch,
     changeCurrentDispatch,
     changeModeDispatch, // 改变mode
-    changePlayListDispatch // 改变playList
+    changePlayListDispatch, // 改变playList
+    togglePlayListDispatch
   } = props;
   // 目前播放时间
   const [currentTime, setCurrentTime] = useState(0);
@@ -188,6 +190,7 @@ const Player = React.forwardRef((props: any, ref: any) => {
           fullScreen={fullScreen}
           toggleFullScreen={toggleFullScreenDispatch}
           clickPlaying={clickPlaying}
+          togglePlayList={togglePlayListDispatch}
         />
       }
       {
@@ -206,6 +209,7 @@ const Player = React.forwardRef((props: any, ref: any) => {
           handleNext={handleNext}
           mode={mode}
           changeMode={changeMode}
+          togglePlayList={togglePlayListDispatch}
         />
       }
       <audio
@@ -215,6 +219,7 @@ const Player = React.forwardRef((props: any, ref: any) => {
         onError={handleError}
       ></audio>
       <Toast text={modeText} ref={toastRef}></Toast>
+      <PlayList></PlayList>
     </div>
   )
 })

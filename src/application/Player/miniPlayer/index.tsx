@@ -5,8 +5,13 @@ import { CSSTransition } from 'react-transition-group';
 import ProgressCircle from '@/components/progress-circle/index';
 
 const MiniPlayer = React.forwardRef((props: any, refs: any) => {
-  const { song, fullScreen, playing, percent } = props;
+  const { song, fullScreen, playing, percent, togglePlayList } = props;
   const { clickPlaying, toggleFullScreen } = props;
+
+  const handlePlayList = (e: any) => {
+    togglePlayList(true);
+    e.stopPropagation();
+  }
 
   const miniPlayerRef = useRef() as any;
   return (
@@ -41,7 +46,7 @@ const MiniPlayer = React.forwardRef((props: any, refs: any) => {
             }
           </ProgressCircle>
         </div>
-        <div className="control">
+        <div className="control" onClick={handlePlayList}>
           <i className="iconfont">&#xe6ac;</i>
         </div>
       </MiniPlayerContainer>

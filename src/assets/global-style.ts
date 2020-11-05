@@ -31,7 +31,7 @@ export default {
   'font-size-ll': '18px',
   "border-color": '#e4e4e4',
   'background-color': '#f2f3f4',
-  'background-color-shadow': 'rgba (0, 0, 0, 0.3)',
+  'background-color-shadow': 'rgba(0, 0, 0, 0.3)',
   'highlight-background-color': '#fff',
   extendClick,
   noWrap

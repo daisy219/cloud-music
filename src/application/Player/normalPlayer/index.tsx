@@ -17,7 +17,7 @@ import { playMode } from '@/api/config';
 
 
 const NormalPlayer = React.forwardRef((props: any, refs: any) => {
-  const { song, fullScreen, playing, percent, duration, currentTime, mode } = props;
+  const { song, fullScreen, playing, percent, duration, currentTime, mode, togglePlayList } = props;
   const { toggleFullScreen, clickPlaying, onProgressChange, handlePrev, handleNext, changeMode } = props;
 
   const normalPlayerRef = useRef() as any;
@@ -100,6 +100,10 @@ const NormalPlayer = React.forwardRef((props: any, refs: any) => {
     }
     return content;
   }
+  const handlePlayList = (e: any) => {
+    togglePlayList(true);
+    e.stopPropagation();
+  }
 
   return (
     <CSSTransition
@@ -172,7 +176,7 @@ const NormalPlayer = React.forwardRef((props: any, refs: any) => {
             <div className="icon i-right" onClick={handleNext}>
               <i className="iconfont">&#xe6a9;</i>
             </div>
-            <div className="icon i-right">
+            <div className="icon i-right" onClick={handlePlayList}>
               <i className="iconfont">&#xe6ac;</i>
             </div>
           </Operators>
