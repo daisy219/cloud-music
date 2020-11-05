@@ -28,7 +28,7 @@ const MusicNote = forwardRef((props: any, ref: any) => {
   // const transform = prefixStyle('transform');
   // 原生DOM操作，返回一个DOM节点对象
   const createNode = (txt: any) => {
-    const template = `<div class='icon_wrapper'${txt}</div>`;
+    const template = `<div class='icon_wrapper'>${txt}</div>`;
     let tempNode = document.createElement('div');
     tempNode.innerHTML = template;
     return tempNode.firstChild;
@@ -71,7 +71,7 @@ const MusicNote = forwardRef((props: any, ref: any) => {
         icon.style.transform = `trandlate3d(0, 0, 0)`;
       }, false)
     })
-  }, []);
+  }, [iconsRef]);
 
   // 外界调用的ref方法
   useImperativeHandle(ref, () => ({

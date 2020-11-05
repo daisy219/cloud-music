@@ -9,6 +9,7 @@ import Scroll from '@/components/scroll/index';
 import SongList from '@/application/SongList';
 import { HEADER_HEIGHT } from '@/api/config';
 import Loading from '@/components/loading';
+import MusicNote from '@/components/music-note/index';
 
 const mapStateToProps = (state: any) => ({
   currentDetail: state.getIn(['singerDetail', 'currentDetail']),
@@ -37,7 +38,10 @@ const SingerDetail = React.forwardRef((prop: any, refs: any) => {
     const header = useRef() as any;
     const layer = useRef() as any;
     const initialHeight = useRef(0) as any;
-  
+    const musicNoteRef = useRef() as any;
+    const musicAnimation = (x: any, y: any) => {
+      musicNoteRef.current.startAnimation({ x, y });
+    }
     const OFFSET = 5;
 
   const handleScroll = useCallback((pos: any) => {
@@ -120,6 +124,7 @@ const SingerDetail = React.forwardRef((prop: any, refs: any) => {
                     <SongList
                       showCollect={false}
                       songs={artist.hotSongs}
+                      musicAnimation={musicAnimation}
                     >
                     </SongList>
                   </Scroll>
@@ -128,6 +133,7 @@ const SingerDetail = React.forwardRef((prop: any, refs: any) => {
             ) : null
           }
         { enterLoading ? (<Loading></Loading>) : null}
+          <MusicNote ref={musicNoteRef}></MusicNote>
         </Container>
       </CSSTransition>
     )

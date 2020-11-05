@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useCallback } from 'react';
+import React, { useEffect, useState, useRef, useCallback, forwardRef} from 'react';
 import { Container, TopDesc, Menu } from './style';
 import { CSSTransition } from 'react-transition-group';
 import Header from '@/components/header/index';
@@ -28,7 +28,7 @@ const mapDispatchToProps = (dispatch: any) => {
 }
 
 
-const Album: React.FC = (props: any) => {
+const Album: React.FC = forwardRef((props: any, ref: any) => {
   const [showStatus, setShowStatus] = useState(true);
   const [title, setTitle] = useState("歌单");
   const [isMarquee, setIsMarquee] = useState(false); // 是否跑马灯
@@ -129,28 +129,29 @@ const Album: React.FC = (props: any) => {
       unmountOnExit
       onExited={props.history.goBack}
     >
-    <Container>
-        {enterLoading ? <Loading></Loading> : null}
-        <Header ref={headerEl} title={title} handleClick={handleBack} isMarquee={isMarquee}></Header>
-      {
-          !isEmptyObject(currentAlbumJS) ? (
-            <Scroll bounceTop={false} onScroll={handleScroll}>
-              <div>
-                { renderTopDesc() }
-                { renderMenu() }
-                <SongsList 
-                  songs={currentAlbumJS.tracks}
-                  collectCount={currentAlbumJS.subscribedCount}
-                  showCollect={true}
-                  musicAnimation={musicAnimation}
-                ></SongsList>
-                <MusicNote ref={musicNoteRef}></MusicNote>
-              </div>
-            </Scroll>
-          ) : null
-      }
-    </Container>
+      <Container>
+          {enterLoading ? <Loading></Loading> : null}
+          <Header ref={headerEl} title={title} handleClick={handleBack} isMarquee={isMarquee}></Header>
+        {
+            !isEmptyObject(currentAlbumJS) ? (
+              <Scroll bounceTop={false} onScroll={handleScroll}>
+                <div>
+                  { renderTopDesc() }
+                  { renderMenu() }
+                  <SongsList 
+                    songs={currentAlbumJS.tracks}
+                    collectCount={currentAlbumJS.subscribedCount}
+                    showCollect={true}
+                    musicAnimation={musicAnimation}
+                  ></SongsList>
+                  
+                </div>
+              </Scroll>
+            ) : null
+        }
+        <MusicNote ref={musicNoteRef}></MusicNote>
+      </Container>
     </CSSTransition>
   )
-}
+})
 export default connect(mapStateToProps, mapDispatchToProps)(React.memo(Album));

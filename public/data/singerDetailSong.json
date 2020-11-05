@@ -6,6 +6,7 @@
       "hotSongs": [
         {
           "name": "我好像在哪见过你",
+          "id": 1416767595,
           "ar": [
             {
               "name": "薛之谦"
@@ -13,11 +14,13 @@
           ],
           "al":
           {
-            "name": "薛之谦专辑"
+            "name": "薛之谦专辑",
+            "picUrl": "https://fuss10.elemecdn.com/d/e6/c4d93a3805b3ce3f323f7974e6f78jpeg.jpeg"
           }
         },
         {
           "name": "我好像在哪见过你",
+          "id": 1416767595,
           "ar": [
             {
               "name": "薛之谦"
@@ -25,11 +28,13 @@
           ],
           "al":
           {
-            "name": "薛之谦专辑"
+            "name": "薛之谦专辑",
+            "picUrl": "https://fuss10.elemecdn.com/d/e6/c4d93a3805b3ce3f323f7974e6f78jpeg.jpeg"
           }
         },
         {
           "name": "我好像在哪见过你",
+          "id": 1416767595,
           "ar": [
             {
               "name": "薛之谦"
@@ -37,11 +42,13 @@
           ],
           "al":
           {
-            "name": "薛之谦专辑"
+            "name": "薛之谦专辑",
+            "picUrl": "https://fuss10.elemecdn.com/d/e6/c4d93a3805b3ce3f323f7974e6f78jpeg.jpeg"
           }
         },
         {
           "name": "我好像在哪见过你",
+          "id": 1416767595,
           "ar": [
             {
               "name": "薛之谦"
@@ -49,11 +56,13 @@
           ],
           "al":
           {
-            "name": "薛之谦专辑"
+            "name": "薛之谦专辑",
+            "picUrl": "https://fuss10.elemecdn.com/d/e6/c4d93a3805b3ce3f323f7974e6f78jpeg.jpeg"
           }
         },
         {
           "name": "我好像在哪见过你",
+          "id": 1416767595,
           "ar": [
           {
             "name": "薛之谦"
@@ -61,7 +70,8 @@
           ],
           "al":
           {
-            "name": "薛之谦专辑"
+            "name": "薛之谦专辑",
+            "picUrl": "https://fuss10.elemecdn.com/d/e6/c4d93a3805b3ce3f323f7974e6f78jpeg.jpeg"
           }
         }
       ]
