@@ -14,12 +14,13 @@ import {
 import MiniPlayer from './miniPlayer';
 import NormalPlayer from './normalPlayer';
 import Toast from '@/components/toast/index';
-import { shuffle, findIndex } from '@/api/utils';
+import { getSongUrl, shuffle, findIndex } from '@/api/utils';
 import { isEmptyObject } from '@/utils/index';
 import { playMode } from '@/api/config';
 
 const Player = React.forwardRef((props: any, ref: any) => {
   const audioRef = useRef() as any;
+  const songReady = useRef(true);
   const {
     fullScreen,
     playing,
@@ -96,19 +97,21 @@ const Player = React.forwardRef((props: any, ref: any) => {
       !playList.length ||
       currentIndex === -1 ||
       !playList[currentIndex] ||
-      playList[currentIndex].id === preSong.id
+      playList[currentIndex].id === preSong.id ||
+      !songReady.current  // 标志为false
     ) {
       return;
     }
-    // changeCurrentIndexDispatch(0); // currentIndex默认为-1,临时改为0
     let current = playList[currentIndex] || {};
-    changeCurrentDispatch(current); // 赋值currentSong
-    // console.log(current);
     setPreSong(current);
-    // audioRef.current.src = getSongUrl(current.id);
-    // setTimeout(() => {
-    //   playing ? audioRef.current.play() : audioRef.current.pause();
-    // });
+    songReady.current = false; // 把标志设置为false,边是现在新的资源没有缓冲完成，蹦年切歌
+    changeCurrentDispatch(current); // 赋值currentSong
+    audioRef.current.src = getSongUrl(current.id);
+    setTimeout(() => {
+      playing ? audioRef.current.play().then(() => {
+        songReady.current = true;
+      }, (err: any) => {console.log(err)}) : audioRef.current.pause();
+    });
     togglePlayingDispatch(true); // 播放状态
     setCurrentTime(0); // 从头开始播放
     setDuration((current.dt / 1000) | 0); // 时长
@@ -118,6 +121,7 @@ const Player = React.forwardRef((props: any, ref: any) => {
     e.stopPropagation();
     togglePlayingDispatch(state);
   }
+
   const onProgressChange = (curPercent: number) => {
     const newTime = curPercent * duration;
     setCurrentTime(newTime);
@@ -169,6 +173,10 @@ const Player = React.forwardRef((props: any, ref: any) => {
       handleNext();
     }
   }
+  const handleError = () => {
+    songReady.current = true;
+    // alert('播放出错');
+  }
   return (
     <div>
       {
@@ -204,6 +212,7 @@ const Player = React.forwardRef((props: any, ref: any) => {
         ref={audioRef}
         onTimeUpdate={updateTime}
         onEnded={handleEnd}
+        onError={handleError}
       ></audio>
       <Toast text={modeText} ref={toastRef}></Toast>
     </div>

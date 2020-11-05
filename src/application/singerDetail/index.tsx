@@ -110,7 +110,7 @@ const SingerDetail = React.forwardRef((prop: any, refs: any) => {
           {
             !isEmptyObject(artist) ? (
               <div>
-                <Header title={"头部"} handleClick={handleBack} ref={header}></Header>
+                <Header title={artist.name} handleClick={handleBack} ref={header}></Header>
                 <ImgWrapper ref={imageWrapper} bgUrl={artist.picUrl}>
                   <div className="filter"></div>
                 </ImgWrapper>

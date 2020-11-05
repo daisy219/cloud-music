@@ -9,7 +9,7 @@ export const Container = styled.div`
   top: 0;
   left: 0;
   right: 0;
-  bottom: 0;
+  bottom: ${(props: any) => props.play > 0 ? '60px' : 0};
   z-index: 1000;
   background: ${style["background-color"]};
   transform-origin: right bottom;
@@ -40,7 +40,7 @@ export const Container = styled.div`
     transition: transform .3s;
     transform: rotateZ(30deg) translate3d(100%, 0, 0);
   }
-`
+` as any
 export const TopDesc = styled.div`
   background-size: 100%;
   padding: 5px 20px;

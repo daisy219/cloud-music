@@ -13,6 +13,7 @@ import { renderRoutes } from 'react-router-config';
 const mapStateToProps = (state: any) => ({
   rankList: state.getIn(['rank', 'rankList']),
   loading: state.getIn(['rank', 'loading']),
+  songsCount: state.getIn(['player', 'playList']).size
 });
 // 映射dispatch到props上
 const mapDispatchTopProps = (dispatch: any) => {
@@ -24,7 +25,7 @@ const mapDispatchTopProps = (dispatch: any) => {
 }
 
 const Rank: React.FC = (prop: any) => {
-  const { rankList: list, loading } = prop;
+  const { rankList: list, loading, songsCount } = prop;
   const { getRankListDataDispatch } = prop;
   let rankList = list ? list.toJS() : [];
 
@@ -74,7 +75,7 @@ const Rank: React.FC = (prop: any) => {
     getRankListDataDispatch();
   }, [getRankListDataDispatch])
   return (
-    <Container>
+    <Container play={songsCount}>
       <Scroll>
         <div>
           <h1 className="offical" style={displayStyle}>官方榜</h1>

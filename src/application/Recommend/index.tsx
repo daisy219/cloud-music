@@ -17,9 +17,9 @@ import { forceCheck } from 'react-lazyload';
 export const Content = styled.div`
   position: fixed;
   top: 90px;
-  bottom: 0;
+  bottom: ${(props: any) => props.play > 0 ? '60px' : 0};
   width: 100%;
-`
+` as any
 interface RecomendListProps extends React.Props<any> {
   route: {
     routes: any
@@ -27,12 +27,13 @@ interface RecomendListProps extends React.Props<any> {
   bannerList: any,
   recommendList: any,
   enterLoading: boolean,
+  songsCount: number,
   getBannerDataDispatch: () => void;
   getRecommendListDataDispatch: () => void;
 }
 
 const Recommend: React.FC<RecomendListProps> = (props: RecomendListProps) => {
-  const { bannerList, recommendList, enterLoading } = props;
+  const { bannerList, recommendList, enterLoading, songsCount } = props;
   const { getBannerDataDispatch, getRecommendListDataDispatch } = props;
 
   useEffect(() => {
@@ -46,20 +47,8 @@ const Recommend: React.FC<RecomendListProps> = (props: RecomendListProps) => {
 
   const bannerListJS = bannerList ? bannerList.toJS(): [];
   const recommendListJS = recommendList ? recommendList.toJS(): [];
-  // // mock
-  // const bannerList = range_arr(1, 4).map(item => {
-  //   return { imageUrl: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1588847094241&di=09653f310edc6469f3207dca22386a8e&imgtype=0&src=http%3A%2F%2Fhbimg.b0.upaiyun.com%2Fbeda8f43d6ac792f00c54073a8bcbd75d40d1e842314-3DXGJO_fw658'};
-  // });
-  // const recommendList = range_arr(1, 10).map(item =>{
-  //   return {
-  //     id: item,
-  //     picUrl: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1588846949563&di=773a7c3d6d020f75bd01b82fb1233536&imgtype=0&src=http%3A%2F%2Fimg.mp.itc.cn%2Fq_mini%2Cc_zoom%2Cw_640%2Fupload%2F20170304%2F2f1a229a03f04ccb8d401fb79047d496_th.jpg',
-  //     playCount: 17171122,
-  //     name: '朴树、许巍、李健、郑钧、老狼、赵雷',
-  //   }
-  // });
   return (
-    <Content>
+    <Content play={songsCount}>
       <Scroll className="list" onScroll={forceCheck}>
         <div>
           <Slider bannerList={bannerListJS}></Slider>
@@ -77,7 +66,8 @@ const mapStateToProps = (state: any) => ({
   // 不然每次diff对比props的时候都是不一样的引用，还会导致不必要的重渲染，属于滥用immutable
   bannerList: state.getIn(['recommend', 'bannerList']),
   recommendList: state.getIn(['recommend', 'recommendList']),
-  enterLoading: state.getIn(['recommend', 'enterLoading'])
+  enterLoading: state.getIn(['recommend', 'enterLoading']),
+  songsCount: state.getIn(['player', 'playList']).size, // 播放列表歌曲数量，以此来判断是否有mini-player
 });
 // 映射dispatch到props上
 const mapDispatchToProps = (dispatch: any) => {
@@ -92,4 +82,3 @@ const mapDispatchToProps = (dispatch: any) => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(React.memo(Recommend));
-// export default React.memo(Recommend);

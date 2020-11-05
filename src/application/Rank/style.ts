@@ -12,7 +12,7 @@ interface ListItemPropType {
 export const Container = styled.div`
   position: fixed;
   top: 90px;
-  bottom: 0;
+  bottom: ${(props: any) => props.play > 0 ? '60px' : 0};
   width: 100%;
   .offical,.global {
     margin: 10px 5px;
@@ -21,7 +21,7 @@ export const Container = styled.div`
     font-size: ${style["font-size-m"]};
     color: ${style["font-color-desc"]};
   }
-`;
+` as any;
 export const List = styled.ul`
   margin-top: 10px;
   padding: 0 5px;

@@ -17,6 +17,7 @@ export const HEADER_HEIGHT = 45;
 const mapStateToProps = (state: any) => ({
   currentAlbum: state.getIn(['album', 'currentAlbum']),
   enterLoading: state.getIn(['album', 'enterLoading']),
+  songCount: state.getIn(['player', 'playList']).size,
 });
 const mapDispatchToProps = (dispatch: any) => {
   return {
@@ -37,7 +38,7 @@ const Album: React.FC = forwardRef((props: any, ref: any) => {
   const musicAnimation = (x: any, y: any) => {
     musicNoteRef.current.startAnimation({ x, y });
   }
-  const { currentAlbum, enterLoading } = props;
+  const { currentAlbum, enterLoading, songCount } = props;
   const { getAlbumDetailDispatch } = props;
   const currentAlbumJS = currentAlbum.toJS() || {};
 
@@ -129,7 +130,7 @@ const Album: React.FC = forwardRef((props: any, ref: any) => {
       unmountOnExit
       onExited={props.history.goBack}
     >
-      <Container>
+      <Container play={songCount}>
           {enterLoading ? <Loading></Loading> : null}
           <Header ref={headerEl} title={title} handleClick={handleBack} isMarquee={isMarquee}></Header>
         {
