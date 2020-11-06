@@ -168,7 +168,7 @@ const NormalPlayer = React.forwardRef((props: any, refs: any) => {
                 className="iconfont"
                 onClick={e => clickPlaying(e, !playing)}
                 dangerouslySetInnerHTML={{
-                  __html: playing ? "&#xe6af;" : "&#xe6aa;"
+                  __html: playing ? "&#xe613;" : "&#xe6aa;"
                 }}
               >
               </i>

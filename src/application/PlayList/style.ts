@@ -42,7 +42,7 @@ export const PlayListWrapper = styled.div`
   }
 `
 export const ScrollWrapper = styled.div`
-  height: 40px;
+  height: 400px;
   overflow: hidden;
 `
 

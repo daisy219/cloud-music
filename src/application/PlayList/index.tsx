@@ -4,7 +4,8 @@ import {
   changeShowPlayList,
   changeCurrentIndex,
   changePlayMode,
-  changePlayList } from '../Player/store/actionCreators';
+  changePlayList, 
+  deleteSong} from '../Player/store/actionCreators';
 import { PlayListWrapper, ScrollWrapper, ListHeader, ListContent } from './style';
 import { CSSTransition } from 'react-transition-group';
 import { getName } from '@/api/utils';
@@ -27,6 +28,7 @@ const PlayList = (props: any) => {
     changeCurrentIndexDispatch,
     changePlayListDispatch,
     changeModeDispatch,
+    deleteSongDispatch
   } = props;
   const playListRef = useRef() as any;
   const listWrapperRef = useRef() as any;
@@ -47,8 +49,10 @@ const PlayList = (props: any) => {
     let content, text;
     if (mode === playMode.sequence) {
       content = '&#xe6ab;';
+      text = '顺序播放';
     } else if (mode === playMode.loop) {
       content = '&#xe635;';
+      text = '单曲循环';
     } else {
       content = '&#xe6b4;'
       text = '随机播放';
@@ -62,6 +66,14 @@ const PlayList = (props: any) => {
   }
   const changeMode = (e: any) => {
     let newMode = (mode + 1) % 3;
+    changeModeDispatch(newMode);
+  }
+  const handleChangeSong = (index: number) => {
+    changeCurrentIndexDispatch(index);
+  }
+  const handleDeleteSong = (e: any, item: any) => {
+    e.stopPropagation();
+    deleteSongDispatch(item);
   }
 
   const onEnterCB = useCallback(() => {
@@ -101,7 +113,7 @@ const PlayList = (props: any) => {
       style={isShow === true ? {display: 'block'} : {display: 'none'}}
         onClick={() => togglePlayListDispatch(false)}
      >
-      <div className='list_wrapper' ref={listWrapperRef}>
+        <div className='list_wrapper' ref={listWrapperRef} onClick={e => e.stopPropagation()}>
         <ListHeader>
           <h1 className="title">
             { getPlayMode() }
@@ -116,12 +128,12 @@ const PlayList = (props: any) => {
                   return (
                     <li className="item" key={item.id}>
                       {getCurrentIcon(item)}
-                      <span className="text">{item.name} - {getName(item.ar)}</span>
+                      <span className="text" onClick={(e) => handleChangeSong(index)}>{item.name} - {getName(item.ar)}</span>
                       <span className="like">
                         <i className="iconfont">&#xe6b0;</i>
                       </span>
-                      <span className="delete">
-                        <i className="iconfont">&#xe6b0;</i>
+                      <span className="delete" onClick={(e) => handleDeleteSong(e, item)}>
+                        <i className="iconfont">&#xe6b1;</i>
                       </span>
                     </li>
                   )
@@ -162,6 +174,9 @@ const mapDispatchToProps = (dispatch: any) => {
     // 修改当前的歌曲列表
     changePlayListDispatch(data: any) {
       dispatch(changePlayList(data));
+    },
+    deleteSongDispatch(data: any) {
+      dispatch(deleteSong(data));
     }
   }
 }
