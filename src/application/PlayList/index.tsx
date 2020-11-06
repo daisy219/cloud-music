@@ -11,7 +11,8 @@ import { CSSTransition } from 'react-transition-group';
 import { getName } from '@/api/utils';
 import { playMode } from '@/api/config';
 import Scroll from '@/components/scroll/index';
-import { transform } from '@babel/core';
+import Confirm from '@/components/confirm/index';
+// import { transform } from '@babel/core';
 
 
 const PlayList = (props: any) => {
@@ -32,6 +33,7 @@ const PlayList = (props: any) => {
   } = props;
   const playListRef = useRef() as any;
   const listWrapperRef = useRef() as any;
+  const confirmRef = useRef() as any;
   const [isShow, setIsShow] = useState(false);
   const currentSong = immutableCurrentSong.toJS();
   const playList = immutabelPlayList.toJS();
@@ -76,6 +78,13 @@ const PlayList = (props: any) => {
     deleteSongDispatch(item);
   }
 
+  const handleClear = () => {
+    confirmRef.current.show();
+  }
+  const handleConfirmClear = () => {
+    confirmRef.current.hide();
+  }
+
   const onEnterCB = useCallback(() => {
     // 让列表显示
     setIsShow(true);
@@ -99,52 +108,59 @@ const PlayList = (props: any) => {
   }, [])
 
   return (
-    <CSSTransition
-      in={showPlayList}
-      timeout={300}
-      classNames="list-fade"
-      onEnter={onEnterCB}
-      onEntering={onEnteringCB}
-      onExiting={onExitingCB}
-      onExited={onExitedCB}
-    >
-     <PlayListWrapper
-      ref={playListRef}
-      style={isShow === true ? {display: 'block'} : {display: 'none'}}
-        onClick={() => togglePlayListDispatch(false)}
-     >
-        <div className='list_wrapper' ref={listWrapperRef} onClick={e => e.stopPropagation()}>
-        <ListHeader>
-          <h1 className="title">
-            { getPlayMode() }
-            <span className="iconfont clear"></span>
-          </h1>
-        </ListHeader>
-        <ScrollWrapper>
-          <Scroll>
-            <ListContent>
-              {
-                playList.map((item: any, index: number) => {
-                  return (
-                    <li className="item" key={item.id}>
-                      {getCurrentIcon(item)}
-                      <span className="text" onClick={(e) => handleChangeSong(index)}>{item.name} - {getName(item.ar)}</span>
-                      <span className="like">
-                        <i className="iconfont">&#xe6b0;</i>
-                      </span>
-                      <span className="delete" onClick={(e) => handleDeleteSong(e, item)}>
-                        <i className="iconfont">&#xe6b1;</i>
-                      </span>
-                    </li>
-                  )
-                })
-              }
-            </ListContent>
-          </Scroll>
-        </ScrollWrapper>
-      </div>
-    </PlayListWrapper>
-    </CSSTransition>
+    <div>
+      <CSSTransition
+        in={showPlayList}
+        timeout={300}
+        classNames="list-fade"
+        onEnter={onEnterCB}
+        onEntering={onEnteringCB}
+        onExiting={onExitingCB}
+        onExited={onExitedCB}
+      >
+       <PlayListWrapper
+        ref={playListRef}
+        style={isShow === true ? {display: 'block'} : {display: 'none'}}
+          onClick={() => togglePlayListDispatch(false)}
+       >
+          <div className='list_wrapper' ref={listWrapperRef} onClick={e => e.stopPropagation()}>
+          <ListHeader>
+            <h1 className="title">
+              { getPlayMode() }
+              <span className="iconfont clear" onClick={handleClear}>&#xe629;</span>
+            </h1>
+          </ListHeader>
+          <ScrollWrapper>
+            <Scroll>
+              <ListContent>
+                {
+                  playList.map((item: any, index: number) => {
+                    return (
+                      <li className="item" key={item.id}>
+                        {getCurrentIcon(item)}
+                        <span className="text" onClick={(e) => handleChangeSong(index)}>{item.name} - {getName(item.ar)}</span>
+                        <span className="like">
+                          <i className="iconfont">&#xe6b0;</i>
+                        </span>
+                        <span className="delete" onClick={(e) => handleDeleteSong(e, item)}>
+                          <i className="iconfont">&#xe6b1;</i>
+                        </span>
+                      </li>
+                    )
+                  })
+                }
+              </ListContent>
+            </Scroll>
+          </ScrollWrapper>
+        </div>
+      </PlayListWrapper>
+      </CSSTransition>
+      <Confirm
+        ref={confirmRef}
+        text={'是否删除全部？'}
+        handleConfirm={handleConfirmClear}
+      />
+    </div>
   )
 }
 // 映射redux全局的state到组件的props上
