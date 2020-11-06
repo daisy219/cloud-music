@@ -4,11 +4,14 @@ import {
   changeShowPlayList,
   changeCurrentIndex,
   changePlayMode,
-  changePlayList, 
+  changePlayList,
+  changeSequecePlayList,
+  changeCurrentSong,
+  changePlayingState,
   deleteSong} from '../Player/store/actionCreators';
 import { PlayListWrapper, ScrollWrapper, ListHeader, ListContent } from './style';
 import { CSSTransition } from 'react-transition-group';
-import { getName } from '@/api/utils';
+import { getName, findIndex, shuffle } from '@/api/utils';
 import { playMode } from '@/api/config';
 import Scroll from '@/components/scroll/index';
 import Confirm from '@/components/confirm/index';
@@ -29,12 +32,23 @@ const PlayList = (props: any) => {
     changeCurrentIndexDispatch,
     changePlayListDispatch,
     changeModeDispatch,
-    deleteSongDispatch
+    deleteSongDispatch,
+    clearDispatch
   } = props;
   const playListRef = useRef() as any;
   const listWrapperRef = useRef() as any;
   const confirmRef = useRef() as any;
   const [isShow, setIsShow] = useState(false);
+  // 是否允许滑动事件生效
+  const [canTouch, setCanTouch] = useState(true);
+  const listContentRef = useRef();
+
+  // touchStart后记录y值
+  const [startY, setStartY] = useState(0);
+  // touchStart事件是否已经被触发
+  const [initialed, setInitialed] = useState(false);
+  // 用户下滑的距离
+  const [distance, setDistance] = useState(0);
   const currentSong = immutableCurrentSong.toJS();
   const playList = immutabelPlayList.toJS();
   const sequencePlayList = immutableSequencePlayList.toJS();
@@ -68,6 +82,21 @@ const PlayList = (props: any) => {
   }
   const changeMode = (e: any) => {
     let newMode = (mode + 1) % 3;
+    if (newMode === 0) {
+      // 顺序模式
+      changePlayListDispatch(sequencePlayList);
+      let index = findIndex(currentSong, sequencePlayList);
+      changeCurrentIndexDispatch(index);
+    } else if (newMode === 1) {
+      // 单曲循环
+      changePlayListDispatch(sequencePlayList);
+    } else if (newMode === 2) {
+      // 随机播放
+      let newList = shuffle(sequencePlayList);
+      let index = findIndex(currentSong, newList);
+      changePlayListDispatch(newList);
+      changeCurrentIndexDispatch(index);
+    }
     changeModeDispatch(newMode);
   }
   const handleChangeSong = (index: number) => {
@@ -83,8 +112,11 @@ const PlayList = (props: any) => {
   }
   const handleConfirmClear = () => {
     confirmRef.current.hide();
+    clearDispatch();
   }
 
+
+  // 列表出现动画
   const onEnterCB = useCallback(() => {
     // 让列表显示
     setIsShow(true);
@@ -107,6 +139,39 @@ const PlayList = (props: any) => {
     listWrapperRef.current.style.transform = `translate3d(0, 100%, 0)`; 
   }, [])
 
+
+  // 下滑关闭及反弹效果
+  const handleTouchStart = (e: any) => {
+    setDistance(0);
+    if (!canTouch || initialed) { return; }
+    listWrapperRef.current.style['transition'] = '';
+    setStartY(e.nativeEvent.touches[0].pageY); // 记录y值
+    setInitialed(true);
+  };
+  const handleTouchMove = (e: any) => {
+    if (!canTouch || !initialed) { return; }
+    let distance = e.nativeEvent.touches[0].pageY - startY;
+    if (distance < 0) { return; }
+    setDistance(distance); // 记录下滑距离
+    listWrapperRef.current.style.transform = `translate3d(0, ${distance}px, 0)`;
+  };
+  const handleTouchEnd = (e: any) => {
+    setInitialed(false);
+    if (distance >= 150) {
+      // 大于150px则关闭playList
+      togglePlayListDispatch(false);
+    } else {
+      // 否则反弹回去
+      listWrapperRef.current.style['transition'] = 'all 0.3s';
+      listWrapperRef.current.style.transform = `translate3d(0, 0, 0)`;
+    }
+  };
+  const handleScroll = (pos: any) => {
+    // 只有当内容偏移量为0的时候才能下滑关闭PlayList。否则一遍内容在移动，一遍列表在移动，出现bug;
+    let state = pos.y === 0;
+    setCanTouch(state);
+  }
+
   return (
     <div>
       <CSSTransition
@@ -123,7 +188,14 @@ const PlayList = (props: any) => {
         style={isShow === true ? {display: 'block'} : {display: 'none'}}
           onClick={() => togglePlayListDispatch(false)}
        >
-          <div className='list_wrapper' ref={listWrapperRef} onClick={e => e.stopPropagation()}>
+          <div
+            className='list_wrapper'
+            ref={listWrapperRef}
+            onClick={e => e.stopPropagation()}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+          >
           <ListHeader>
             <h1 className="title">
               { getPlayMode() }
@@ -131,7 +203,11 @@ const PlayList = (props: any) => {
             </h1>
           </ListHeader>
           <ScrollWrapper>
-            <Scroll>
+            <Scroll
+              ref={listContentRef}
+              onScroll={(pos: any) => handleScroll(pos)}
+              bounceTop={false}
+            >
               <ListContent>
                 {
                   playList.map((item: any, index: number) => {
@@ -176,7 +252,7 @@ const mapStateToProps = (state: any) => ({
 // 映射dispatch到props上
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    togglePlayListDispatch(data: any) {
+    togglePlayListDispatch(data: boolean) {
       dispatch(changeShowPlayList(data));
     },
     // 修改当前歌曲在列表中的index，也就是切歌
@@ -193,6 +269,19 @@ const mapDispatchToProps = (dispatch: any) => {
     },
     deleteSongDispatch(data: any) {
       dispatch(deleteSong(data));
+    },
+    clearDispatch() {
+      // 1.清空两个列表
+      dispatch(changePlayList([]));
+      dispatch(changeSequecePlayList([]));
+      // 2.初始currentIndex
+      dispatch(changeCurrentIndex(-1));
+      // 3.关闭PlayList的显示
+      dispatch(changeShowPlayList(false));
+      // 4.将当前歌曲置空
+      dispatch(changeCurrentSong({}));
+      // 5.重置播放状态
+      dispatch(changePlayingState(false));
     }
   }
 }
