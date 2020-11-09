@@ -16,7 +16,7 @@ const Home: React.FC = (props: any) => {
       <Top>
         <span className="iconfont menu">&#xe6ac;</span>
         <span className="title">music</span>
-        <span className="iconfont search">&#xe6ae;</span>
+        <span className="iconfont search" onClick={() => props.history.push('/search')}>&#xe6ae;</span>
       </Top>
       <Tab>
         <NavLink to="/recommend" activeClassName="selected"><TabItem><span > 推荐 </span></TabItem></NavLink>

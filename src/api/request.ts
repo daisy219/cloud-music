@@ -41,3 +41,14 @@ export const getSingerDetailRequest = (): any => {
 export const getPlayListRequest = (): any => {
   return axiosInstance.get('/playList.json');
 }
+// 搜索
+export const getHotKeyWordsRequest = () => {
+  return axiosInstance.get(`/search/hot`);
+}
+
+export const getSuggestListRequest = (query: string) => {
+  return axiosInstance.get(`/search/suggest?keywords=${query}`);
+}
+export const getResultSongsListRequest = (query: string) => {
+  return axiosInstance.get(`search?keywords=${query}`);
+}
