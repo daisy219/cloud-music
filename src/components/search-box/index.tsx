@@ -47,7 +47,7 @@ const Search = (props: any) => {
   const displayStyle = query ? {display: 'block'}: {display: 'none'};
   useEffect(() => {
     queryRef.current.focus();
-  }, [])
+  }, [queryRef])
 
   const handleChange = (e: any) => {
     // 搜索空内容改变时的逻辑
@@ -62,13 +62,13 @@ const Search = (props: any) => {
   useEffect(() => {
     // 注意防抖
     handleQueryDebounce(query);
-  }, [query])
+  }, [handleQueryDebounce, query])
 
   useEffect(() => {
     if (newQuery !== query) {
       setQuery(newQuery);
     }
-  }, [newQuery]);
+  }, [newQuery, query]);
   const clearQuery = () => {
     // 请空框内容的逻辑
     setQuery('');

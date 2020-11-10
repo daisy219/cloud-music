@@ -21,7 +21,7 @@ import Confirm from '@/components/confirm/index';
 const PlayList = (props: any) => {
   const {
     showPlayList,
-    currentIndex,
+    // currentIndex,
     currentSong: immutableCurrentSong,
     playList: immutabelPlayList,
     mode,
@@ -122,22 +122,22 @@ const PlayList = (props: any) => {
     setIsShow(true);
     // 最开始是隐藏在下面
     listWrapperRef.current.style.transform = `translate3d(0, 100%, 0)`;
-  }, []);
+  }, [listWrapperRef, ]);
 
   const onEnteringCB = useCallback(() => {
     listWrapperRef.current.style['transition'] = 'all 0.3s';
     listWrapperRef.current.style.transform = `translate3d(0, 0, 0)`;
-  }, []);
+  }, [listWrapperRef]);
 
   const onExitingCB = useCallback(() => {
     listWrapperRef.current.style['transition'] = 'all 0.3s';
     listWrapperRef.current.style.transform = `translate3d(0, 100%, 0)`;
-  }, []);
+  }, [listWrapperRef]);
 
   const onExitedCB = useCallback(() => {
     setIsShow(false);
     listWrapperRef.current.style.transform = `translate3d(0, 100%, 0)`; 
-  }, [])
+  }, [listWrapperRef])
 
 
   // 下滑关闭及反弹效果

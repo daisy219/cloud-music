@@ -117,7 +117,13 @@ const Player = React.forwardRef((props: any, ref: any) => {
     togglePlayingDispatch(true); // 播放状态
     setCurrentTime(0); // 从头开始播放
     setDuration((current.dt / 1000) | 0); // 时长
-  }, [playing, currentIndex, changeCurrentDispatch, playList, preSong.id, togglePlayingDispatch]);
+  }, [playing,
+      currentIndex,
+      changeCurrentDispatch,
+      playList,
+      preSong.id,
+      togglePlayingDispatch,
+      audioRef]);
 
   const clickPlaying = (e: any, state: boolean) => {
     e.stopPropagation();

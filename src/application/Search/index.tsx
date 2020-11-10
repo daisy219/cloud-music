@@ -7,7 +7,7 @@ import { getHotKeyWords, changeEnterLoading, getSuggestList } from './store/acti
 import { getSongDetail } from '@/application/Player/store/actionCreators';
 import Scroll from '@/components/scroll';
 import Loading from '@/components/loading/index';
-import LazyLoad, {forceCheck} from 'react-lazyload';
+import LazyLoad from 'react-lazyload';
 import MusicalNote from '@/components/music-note';
 import { List, ListItem } from './style';
 import { SongItem } from '../SongList/style';
@@ -48,7 +48,7 @@ const Search = (props: any) => {
     if (!hotList || !hotList.size) {
       getHotKeyWordsDispatch();
     }
-  }, []);
+  }, [getHotKeyWordsDispatch, hotList]);
   const selectItem = (e: any, id: string) => {
     getSongDetailDispatch(id);
     musicalNoteRef.current.startAnimation({ x: e.nativeEvent.clientX, y: e.nativeEvent.clientY})

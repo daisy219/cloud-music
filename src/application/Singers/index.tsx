@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useRef } from 'react';
+import React, { useEffect, useContext } from 'react';
 import Horizen from '@/components/horizen-item/index';
 import Scroll from '@/components/scroll/index';
 import Loading from '@/components/loading/index';
