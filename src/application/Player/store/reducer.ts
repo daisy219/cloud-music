@@ -25,6 +25,40 @@ const handleDeletSong = (state: any, song: any) => {
   });
 }
 
+const handleInsertSong = (state: any, song: any) => {
+  const playList = JSON.parse(JSON.stringify(state.get('playList').toJS()));
+  const sequenceList = JSON.parse(JSON.stringify(state.get('sequencePlayList').toJS()));
+  let currentIndex = state.get('currentIndex');
+  let fpIndex = findIndex(song, playList);
+  if (fpIndex === currentIndex && currentIndex !== -1) return state;
+  currentIndex++;
+  playList.splice(currentIndex, 0, song);
+  if (fpIndex > -1) {
+    if (currentIndex > fpIndex) {
+      playList.splice(fpIndex, 1);
+      currentIndex--;
+    } else {
+      playList.splice(fpIndex + 1, 1);
+    }
+  }
+  let sequenceIndex = findIndex(playList[currentIndex], sequenceList) + 1;
+  let fsIndex = findIndex(song, sequenceList);
+  sequenceList.splice(sequenceList, 0, song);
+  if (fsIndex > -1) {
+    if (sequenceIndex > fsIndex) {
+      sequenceList.splice(fsIndex, 1);
+      sequenceIndex--;
+    } else {
+      sequenceList.splice(fsIndex + 1, 1);
+    }
+  }
+  return state.merge({
+    'playList': fromJS(playList),
+    'sequencePlayList': fromJS(sequenceList),
+    'currentIndex': fromJS(currentIndex),
+  })
+}
+
 const defaultState = fromJS({
   fullScreen: false, // 播放器是否为全屏模式
   playing: false, // 当前歌曲是否播放
@@ -55,7 +89,9 @@ export default (state = defaultState, action: any) => {
     case actionTypes.SET_SHOW_PLAYLIST:
       return state.set('showPlayList', action.data);
     case actionTypes.DELETE_SONG:
-      return handleDeletSong(state, action.data)
+      return handleDeletSong(state, action.data);
+      case actionTypes.INSERT_SONG:
+        return handleInsertSong(state, action.data);
     default:
       return state;
   }

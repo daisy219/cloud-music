@@ -6,6 +6,27 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "14136149",
+      "name": "清空",
+      "font_class": "qingkong",
+      "unicode": "e63a",
+      "unicode_decimal": 58938
+    },
+    {
+      "icon_id": "14112065",
+      "name": "关 闭",
+      "font_class": "guanbi",
+      "unicode": "e688",
+      "unicode_decimal": 59016
+    },
+    {
+      "icon_id": "8035116",
+      "name": "删 除",
+      "font_class": "shanchu",
+      "unicode": "e626",
+      "unicode_decimal": 58918
+    },
+    {
       "icon_id": "17425267",
       "name": "单曲循环",
       "font_class": "danquxunhuan",

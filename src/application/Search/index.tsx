@@ -1,12 +1,14 @@
-import React, { useState, useEffect, useCallback} from 'react';
+import React, { useState, useEffect, useCallback, useRef} from 'react';
 import { CSSTransition } from 'react-transition-group';
 import { Container, ShortcutWrapper, HotKey } from './style';
 import { connect } from 'react-redux';
 import SearchBox from '@/components/search-box/index';
 import { getHotKeyWords, changeEnterLoading, getSuggestList } from './store/actionCreators';
+import { getSongDetail } from '@/application/Player/store/actionCreators';
 import Scroll from '@/components/scroll';
 import Loading from '@/components/loading/index';
 import LazyLoad, {forceCheck} from 'react-lazyload';
+import MusicalNote from '@/components/music-note';
 import { List, ListItem } from './style';
 import { SongItem } from '../SongList/style';
 import { getName } from '@/api/utils';
@@ -30,6 +32,7 @@ const Search = (props: any) => {
     getSuggestListDispatch,
     getSongDetailDispatch
   } = props;
+  const musicalNoteRef = useRef() as any;
   // 由于是传给子组件的方法，尽量用useCallback包裹，以使得在依赖未改变，始终给子组件传递的是相同的引用
   const searchBack = useCallback(() => {
     setShow(false);
@@ -42,10 +45,14 @@ const Search = (props: any) => {
   }
   useEffect(() => {
     setShow(true);
-    if (!hotList.size) {
+    if (!hotList || !hotList.size) {
       getHotKeyWordsDispatch();
     }
   }, []);
+  const selectItem = (e: any, id: string) => {
+    getSongDetailDispatch(id);
+    musicalNoteRef.current.startAnimation({ x: e.nativeEvent.clientX, y: e.nativeEvent.clientY})
+  }
   const renderHotKey = () => {
     let list = hotList ? hotList.toJS() : [];
     return (
@@ -112,11 +119,11 @@ const Search = (props: any) => {
   };
   const renderSongs = () => {
     return (
-      <SongItem style={{paddingLeft: '20px'}}>
+      <SongItem style={{ paddingLeft: '20px' }}>
         {
           songsList.map((item: any) => {
             return (
-              <li key={item.id}>
+              <li key={item.id} onClick={(e) => selectItem(e, item)}>
                 <div className="info">
                   <span>{item.name}</span>
                   <span>
@@ -140,7 +147,7 @@ const Search = (props: any) => {
       unmountOnExit
       onExited={() => props.history.goBack()}
     >
-      <Container>
+      <Container play={songsCount}>
         <SearchBox back={searchBack} newQuery={query} handleQuery={handleQuery}></SearchBox>
         <ShortcutWrapper show={!query}>
           <Scroll>
@@ -155,6 +162,7 @@ const Search = (props: any) => {
             </div>
           </Scroll>
         </ShortcutWrapper>
+        <MusicalNote ref={musicalNoteRef}/>
         { enterLoading ? <Loading></Loading> : null }
       </Container>
 
@@ -178,6 +186,9 @@ const mapDispatchToProps = (dispatch: any) => {
     },
     getSuggestListDispatch(data: any) {
       dispatch(getSuggestList(data));
+    },
+    getSongDetailDispatch(id: string) {
+      dispatch(getSongDetail(id));
     }
   }
 }

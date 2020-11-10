@@ -7,10 +7,11 @@ import {
   SET_PLAY_MODE,
   SET_CURRENT_INDEX,
   SET_SHOW_PLAYLIST,
-  DELETE_SONG
+  DELETE_SONG,
+  INSERT_SONG
 } from './constants';
 import { fromJS } from 'immutable';
-import { getPlayListRequest } from '@/api/request';
+import { getPlayListRequest, getSongDetailRequest } from '@/api/request';
 import { waitTime } from '@/utils/index';
 
 export const changeCurrentSong = (data: any) => ({
@@ -56,7 +57,20 @@ export const changeShowPlayList = (data: any) => ({
 export const deleteSong = (data: any) => ({
   type: DELETE_SONG,
   data
+});
+export const insertSong = (data: any) => ({
+  type: INSERT_SONG,
+  data,
 })
+
+export const getSongDetail = (id: string) => {
+  return (dispatch: any) => {
+    getSongDetailRequest(id).then((data: any) => {
+      let song = data.songs[0];
+      dispatch(insertSong(song));
+    })
+  }
+}
 
 export const getPlayList = () => {
   return (dispatch: any) => {

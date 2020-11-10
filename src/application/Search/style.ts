@@ -6,7 +6,7 @@ export const Container = styled.div`
   top: 0;
   left: 0;
   right: 0;
-  bottom: 0;
+  bottom: ${(props: any) => props.play > 0 ? '60px' : 0};
   width: 100%;
   z-index: 100;
   overflow: hidden;
@@ -26,7 +26,7 @@ export const Container = styled.div`
     transition: all 0.3s;
     transform: translate3d(100%, 0, 0);
   }
-`
+` as any
 
 export const ShortcutWrapper = styled.div`
   position: absolute;

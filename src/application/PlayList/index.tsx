@@ -199,7 +199,7 @@ const PlayList = (props: any) => {
           <ListHeader>
             <h1 className="title">
               { getPlayMode() }
-              <span className="iconfont clear" onClick={handleClear}>&#xe629;</span>
+              <span className="iconfont clear" onClick={handleClear}>&#xe63a;</span>
             </h1>
           </ListHeader>
           <ScrollWrapper>
@@ -219,7 +219,7 @@ const PlayList = (props: any) => {
                           <i className="iconfont">&#xe6b0;</i>
                         </span>
                         <span className="delete" onClick={(e) => handleDeleteSong(e, item)}>
-                          <i className="iconfont">&#xe6b1;</i>
+                          <i className="iconfont">&#xe626;</i>
                         </span>
                       </li>
                     )
